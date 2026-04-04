@@ -1,0 +1,8 @@
+{
+  "enabled": true,
+  "taskName": "OpenClaw Report Delivery Runner",
+  "runnerBat": "tasks/report-delivery-runner.bat",
+  "intervalMinutes": 5,
+  "stateFile": "tasks/report-delivery-scheduler-state.json",
+  "notes": "Windows Scheduled Task that runs the report delivery runner periodically."
+}

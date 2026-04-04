@@ -1,0 +1,5 @@
+{
+  "dedupeMode": "task",
+  "maxItems": 20,
+  "maxAgeMinutes": 180
+}

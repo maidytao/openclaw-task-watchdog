@@ -1,0 +1,11 @@
+{
+  "enabled": true,
+  "queueFile": "tasks/report-queue.json",
+  "stateFile": "tasks/report-sender-state.json",
+  "batchSize": 10,
+  "dryRun": false,
+  "target": {
+    "mode": "session",
+    "sessionKey": "current"
+  }
+}

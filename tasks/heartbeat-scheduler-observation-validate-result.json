@@ -1,0 +1,100 @@
+{
+  "steps": [
+    {
+      "case": "idle_before_pending",
+      "run": {
+        "command": [
+          "python",
+          "tools\\heartbeat_scheduler_observation.py"
+        ],
+        "returncode": 0,
+        "stdout": "{\"checkedAt\": \"2026-04-04T15:57:14.042326+08:00\", \"ok\": true, \"action\": \"idle\", \"reason\": \"no_ready_scheduler_observation_inbox\", \"inboxStatus\": \"idle\", \"messageKey\": \"\"}\n",
+        "stderr": ""
+      },
+      "result": {
+        "checkedAt": "2026-04-04T15:57:14.042326+08:00",
+        "ok": true,
+        "action": "idle",
+        "reason": "no_ready_scheduler_observation_inbox",
+        "inboxStatus": "idle",
+        "messageKey": ""
+      }
+    },
+    {
+      "case": "pending_ready",
+      "run": {
+        "command": [
+          "python",
+          "tools\\heartbeat_scheduler_observation.py"
+        ],
+        "returncode": 0,
+        "stdout": "{\"checkedAt\": \"2026-04-04T15:57:15.821915+08:00\", \"ok\": true, \"action\": \"polled\", \"messageKey\": \"heartbeat-inbox-check|执行中||heartbeat 自动消费 scheduler observation inbox|2026-04-04T15:57:14.080205+08:00\", \"poll\": {\"command\": [\"python\", \"tools\\\\poll_scheduler_observation_inbox.py\"], \"returncode\": 0, \"stdout\": \"{\\\"checkedAt\\\": \\\"2026-04-04T15:57:15.783097+08:00\\\", \\\"ok\\\": true, \\\"messageKey\\\": \\\"heartbeat-inbox-check|执行中||heartbeat 自动消费 scheduler observation inbox|2026-04-04T15:57:14.080205+08:00\\\", \\\"consume\\\": {\\\"command\\\": [\\\"python\\\", \\\"tools\\\\\\\\consume_scheduler_observation_bridge.py\\\"], \\\"returncode\\\": 0, \\\"stdout\\\": \\\"{\\\\\\\"ok\\\\\\\": true, \\\\\\\"messageKey\\\\\\\": \\\\\\\"heartbeat-inbox-check|执行中||heartbeat 自动消费 scheduler observation inbox|2026-04-04T15:57:14.080205+08:00\\\\\\\", \\\\\\\"steps\\\\\\\": [{\\\\\\\"command\\\\\\\": [\\\\\\\"python\\\\\\\", \\\\\\\"tools\\\\\\\\\\\\\\\\task_report_sender_confirm_success.py\\\\\\\", \\\\\\\"--source\\\\\\\", \\\\\\\"scheduler_bridge_consumer\\\\\\\", \\\\\\\"--note\\\\\\\", \\\\\\\"scheduled delivery observed via bridge consumer\\\\\\\"], \\\\\\\"returncode\\\\\\\": 0, \\\\\\\"stdout\\\\\\\": \\\\\\\"{\\\\\\\\\\\\\\\"written\\\\\\\\\\\\\\\": true, \\\\\\\\\\\\\\\"messageKey\\\\\\\\\\\\\\\": \\\\\\\\\\\\\\\"heartbeat-inbox-check|ִ����||heartbeat �Զ����� scheduler observation inbox|2026-04-04T15:57:14.080205+08:00\\\\\\\\\\\\\\\", \\\\\\\\\\\\\\\"status\\\\\\\\\\\\\\\": \\\\\\\\\\\\\\\"success\\\\\\\\\\\\\\\", \\\\\\\\\\\\\\\"source\\\\\\\\\\\\\\\": \\\\\\\\\\\\\\\"scheduler_bridge_consumer\\\\\\\\\\\\\\\", \\\\\\\\\\\\\\\"observationCount\\\\\\\\\\\\\\\": 1}\\\\\\\\n\\\\\\\", \\\\\\\"stderr\\\\\\\": \\\\\\\"\\\\\\\"}, {\\\\\\\"command\\\\\\\": [\\\\\\\"python\\\\\\\", \\\\\\\"tools\\\\\\\\\\\\\\\\task_report_sender_reconcile.py\\\\\\\", \\\\\\\"--note\\\\\\\", \\\\\\\"reconcile after bridge consumer observed delivery\\\\\\\"], \\\\\\\"returncode\\\\\\\": 0, \\\\\\\"stdout\\\\\\\": \\\\\\\"{\\\\\\\\\\\\\\\"action\\\\\\\\\\\\\\\": \\\\\\\\\\\\\\\"reconciled_to_success\\\\\\\\\\\\\\\", \\\\\\\\\\\\\\\"queueLength\\\\\\\\\\\\\\\": 0, \\\\\\\\\\\\\\\"hasPendingConfirmation\\\\\\\\\\\\\\\": false, \\\\\\\\\\\\\\\"hasPendingToolPayload\\\\\\\\\\\\\\\": false, \\\\\\\\\\\\\\\"lastError\\\\\\\\\\\\\\\": \\\\\\\\\\\\\\\"\\\\\\\\\\\\\\\", \\\\\\\\\\\\\\\"matchedObservation\\\\\\\\\\\\\\\": {\\\\\\\\\\\\\\\"observedAt\\\\\\\\\\\\\\\": \\\\\\\\\\\\\\\"2026-04-04T15:57:15.134353+08:00\\\\\\\\\\\\\\\", \\\\\\\\\\\\\\\"messageKey\\\\\\\\\\\\\\\": \\\\\\\\\\\\\\\"heartbeat-inbox-check|ִ����||heartbeat �Զ����� scheduler observation inbox|2026-04-04T15:57:14.080205+08:00\\\\\\\\\\\\\\\", \\\\\\\\\\\\\\\"status\\\\\\\\\\\\\\\": \\\\\\\\\\\\\\\"success\\\\\\\\\\\\\\\", \\\\\\\\\\\\\\\"note\\\\\\\\\\\\\\\": \\\\\\\\\\\\\\\"scheduled delivery observed via bridge consumer\\\\\\\\\\\\\\\", \\\\\\\\\\\\\\\"source\\\\\\\\\\\\\\\": \\\\\\\\\\\\\\\"scheduler_bridge_consumer\\\\\\\\\\\\\\\"}}\\\\\\\\n\\\\\\\", \\\\\\\"stderr\\\\\\\": \\\\\\\"\\\\\\\"}, {\\\\\\\"command\\\\\\\": [\\\\\\\"python\\\\\\\", \\\\\\\"tools\\\\\\\\\\\\\\\\cleanup_stale_report_protocol.py\\\\\\\"], \\\\\\\"returncode\\\\\\\": 0, \\\\\\\"stdout\\\\\\\": \\\\\\\"{\\\\\\\\\\\\\\\"ok\\\\\\\\\\\\\\\": true, \\\\\\\\\\\\\\\"successMessageKey\\\\\\\\\\\\\\\": \\\\\\\\\\\\\\\"heartbeat-inbox-check|ִ����||heartbeat �Զ����� scheduler observation inbox|2026-04-04T15:57:14.080205+08:00\\\\\\\\\\\\\\\", \\\\\\\\\\\\\\\"terminalAt\\\\\\\\\\\\\\\": \\\\\\\\\\\\\\\"2026-04-04T15:57:15.443664+08:00\\\\\\\\\\\\\\\", \\\\\\\\\\\\\\\"removed\\\\\\\\\\\\\\\": [], \\\\\\\\\\\\\\\"kept\\\\\\\\\\\\\\\": [\\\\\\\\\\\\\\\"C:\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\Users\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\Administrator\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\.openclaw\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\workspace\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\tasks\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\report-live-send-result.json\\\\\\\\\\\\\\\"], \\\\\\\\\\\\\\\"stateDispatchRequestStatus\\\\\\\\\\\\\\\": \\\\\\\\\\\\\\\"reconciled_success\\\\\\\\\\\\\\\", \\\\\\\\\\\\\\\"stateLiveSendPlanStatus\\\\\\\\\\\\\\\": \\\\\\\\\\\\\\\"\\\\\\\\\\\\\\\"}\\\\\\\\n\\\\\\\", \\\\\\\"stderr\\\\\\\": \\\\\\\"\\\\\\\"}], \\\\\\\"queueClosed\\\\\\\": true, \\\\\\\"lastError\\\\\\\": \\\\\\\"\\\\\\\", \\\\\\\"lastAttemptStatus\\\\\\\": \\\\\\\"success\\\\\\\"}\\\\n\\\", \\\"stderr\\\": \\\"\\\"}, \\\"inboxStatus\\\": \\\"consumed\\\"}\\n\", \"stderr\": \"\"}, \"pollResult\": {\"checkedAt\": \"2026-04-04T15:57:15.783097+08:00\", \"ok\": true, \"messageKey\": \"heartbeat-inbox-check|执行中||heartbeat 自动消费 scheduler observation inbox|2026-04-04T15:57:14.080205+08:00\", \"consume\": {\"command\": [\"python\", \"tools\\\\consume_scheduler_observation_bridge.py\"], \"returncode\": 0, \"stdout\": \"{\\\"ok\\\": true, \\\"messageKey\\\": \\\"heartbeat-inbox-check|执行中||heartbeat 自动消费 scheduler observation inbox|2026-04-04T15:57:14.080205+08:00\\\", \\\"steps\\\": [{\\\"command\\\": [\\\"python\\\", \\\"tools\\\\\\\\task_report_sender_confirm_success.py\\\", \\\"--source\\\", \\\"scheduler_bridge_consumer\\\", \\\"--note\\\", \\\"scheduled delivery observed via bridge consumer\\\"], \\\"returncode\\\": 0, \\\"stdout\\\": \\\"{\\\\\\\"written\\\\\\\": true, \\\\\\\"messageKey\\\\\\\": \\\\\\\"heartbeat-inbox-check|ִ����||heartbeat �Զ����� scheduler observation inbox|2026-04-04T15:57:14.080205+08:00\\\\\\\", \\\\\\\"status\\\\\\\": \\\\\\\"success\\\\\\\", \\\\\\\"source\\\\\\\": \\\\\\\"scheduler_bridge_consumer\\\\\\\", \\\\\\\"observationCount\\\\\\\": 1}\\\\n\\\", \\\"stderr\\\": \\\"\\\"}, {\\\"command\\\": [\\\"python\\\", \\\"tools\\\\\\\\task_report_sender_reconcile.py\\\", \\\"--note\\\", \\\"reconcile after bridge consumer observed delivery\\\"], \\\"returncode\\\": 0, \\\"stdout\\\": \\\"{\\\\\\\"action\\\\\\\": \\\\\\\"reconciled_to_success\\\\\\\", \\\\\\\"queueLength\\\\\\\": 0, \\\\\\\"hasPendingConfirmation\\\\\\\": false, \\\\\\\"hasPendingToolPayload\\\\\\\": false, \\\\\\\"lastError\\\\\\\": \\\\\\\"\\\\\\\", \\\\\\\"matchedObservation\\\\\\\": {\\\\\\\"observedAt\\\\\\\": \\\\\\\"2026-04-04T15:57:15.134353+08:00\\\\\\\", \\\\\\\"messageKey\\\\\\\": \\\\\\\"heartbeat-inbox-check|ִ����||heartbeat �Զ����� scheduler observation inbox|2026-04-04T15:57:14.080205+08:00\\\\\\\", \\\\\\\"status\\\\\\\": \\\\\\\"success\\\\\\\", \\\\\\\"note\\\\\\\": \\\\\\\"scheduled delivery observed via bridge consumer\\\\\\\", \\\\\\\"source\\\\\\\": \\\\\\\"scheduler_bridge_consumer\\\\\\\"}}\\\\n\\\", \\\"stderr\\\": \\\"\\\"}, {\\\"command\\\": [\\\"python\\\", \\\"tools\\\\\\\\cleanup_stale_report_protocol.py\\\"], \\\"returncode\\\": 0, \\\"stdout\\\": \\\"{\\\\\\\"ok\\\\\\\": true, \\\\\\\"successMessageKey\\\\\\\": \\\\\\\"heartbeat-inbox-check|ִ����||heartbeat �Զ����� scheduler observation inbox|2026-04-04T15:57:14.080205+08:00\\\\\\\", \\\\\\\"terminalAt\\\\\\\": \\\\\\\"2026-04-04T15:57:15.443664+08:00\\\\\\\", \\\\\\\"removed\\\\\\\": [], \\\\\\\"kept\\\\\\\": [\\\\\\\"C:\\\\\\\\\\\\\\\\Users\\\\\\\\\\\\\\\\Administrator\\\\\\\\\\\\\\\\.openclaw\\\\\\\\\\\\\\\\workspace\\\\\\\\\\\\\\\\tasks\\\\\\\\\\\\\\\\report-live-send-result.json\\\\\\\"], \\\\\\\"stateDispatchRequestStatus\\\\\\\": \\\\\\\"reconciled_success\\\\\\\", \\\\\\\"stateLiveSendPlanStatus\\\\\\\": \\\\\\\"\\\\\\\"}\\\\n\\\", \\\"stderr\\\": \\\"\\\"}], \\\"queueClosed\\\": true, \\\"lastError\\\": \\\"\\\", \\\"lastAttemptStatus\\\": \\\"success\\\"}\\n\", \"stderr\": \"\"}, \"inboxStatus\": \"consumed\"}}\n",
+        "stderr": ""
+      },
+      "result": {
+        "checkedAt": "2026-04-04T15:57:15.821915+08:00",
+        "ok": true,
+        "action": "polled",
+        "messageKey": "heartbeat-inbox-check|执行中||heartbeat 自动消费 scheduler observation inbox|2026-04-04T15:57:14.080205+08:00",
+        "poll": {
+          "command": [
+            "python",
+            "tools\\poll_scheduler_observation_inbox.py"
+          ],
+          "returncode": 0,
+          "stdout": "{\"checkedAt\": \"2026-04-04T15:57:15.783097+08:00\", \"ok\": true, \"messageKey\": \"heartbeat-inbox-check|执行中||heartbeat 自动消费 scheduler observation inbox|2026-04-04T15:57:14.080205+08:00\", \"consume\": {\"command\": [\"python\", \"tools\\\\consume_scheduler_observation_bridge.py\"], \"returncode\": 0, \"stdout\": \"{\\\"ok\\\": true, \\\"messageKey\\\": \\\"heartbeat-inbox-check|执行中||heartbeat 自动消费 scheduler observation inbox|2026-04-04T15:57:14.080205+08:00\\\", \\\"steps\\\": [{\\\"command\\\": [\\\"python\\\", \\\"tools\\\\\\\\task_report_sender_confirm_success.py\\\", \\\"--source\\\", \\\"scheduler_bridge_consumer\\\", \\\"--note\\\", \\\"scheduled delivery observed via bridge consumer\\\"], \\\"returncode\\\": 0, \\\"stdout\\\": \\\"{\\\\\\\"written\\\\\\\": true, \\\\\\\"messageKey\\\\\\\": \\\\\\\"heartbeat-inbox-check|ִ����||heartbeat �Զ����� scheduler observation inbox|2026-04-04T15:57:14.080205+08:00\\\\\\\", \\\\\\\"status\\\\\\\": \\\\\\\"success\\\\\\\", \\\\\\\"source\\\\\\\": \\\\\\\"scheduler_bridge_consumer\\\\\\\", \\\\\\\"observationCount\\\\\\\": 1}\\\\n\\\", \\\"stderr\\\": \\\"\\\"}, {\\\"command\\\": [\\\"python\\\", \\\"tools\\\\\\\\task_report_sender_reconcile.py\\\", \\\"--note\\\", \\\"reconcile after bridge consumer observed delivery\\\"], \\\"returncode\\\": 0, \\\"stdout\\\": \\\"{\\\\\\\"action\\\\\\\": \\\\\\\"reconciled_to_success\\\\\\\", \\\\\\\"queueLength\\\\\\\": 0, \\\\\\\"hasPendingConfirmation\\\\\\\": false, \\\\\\\"hasPendingToolPayload\\\\\\\": false, \\\\\\\"lastError\\\\\\\": \\\\\\\"\\\\\\\", \\\\\\\"matchedObservation\\\\\\\": {\\\\\\\"observedAt\\\\\\\": \\\\\\\"2026-04-04T15:57:15.134353+08:00\\\\\\\", \\\\\\\"messageKey\\\\\\\": \\\\\\\"heartbeat-inbox-check|ִ����||heartbeat �Զ����� scheduler observation inbox|2026-04-04T15:57:14.080205+08:00\\\\\\\", \\\\\\\"status\\\\\\\": \\\\\\\"success\\\\\\\", \\\\\\\"note\\\\\\\": \\\\\\\"scheduled delivery observed via bridge consumer\\\\\\\", \\\\\\\"source\\\\\\\": \\\\\\\"scheduler_bridge_consumer\\\\\\\"}}\\\\n\\\", \\\"stderr\\\": \\\"\\\"}, {\\\"command\\\": [\\\"python\\\", \\\"tools\\\\\\\\cleanup_stale_report_protocol.py\\\"], \\\"returncode\\\": 0, \\\"stdout\\\": \\\"{\\\\\\\"ok\\\\\\\": true, \\\\\\\"successMessageKey\\\\\\\": \\\\\\\"heartbeat-inbox-check|ִ����||heartbeat �Զ����� scheduler observation inbox|2026-04-04T15:57:14.080205+08:00\\\\\\\", \\\\\\\"terminalAt\\\\\\\": \\\\\\\"2026-04-04T15:57:15.443664+08:00\\\\\\\", \\\\\\\"removed\\\\\\\": [], \\\\\\\"kept\\\\\\\": [\\\\\\\"C:\\\\\\\\\\\\\\\\Users\\\\\\\\\\\\\\\\Administrator\\\\\\\\\\\\\\\\.openclaw\\\\\\\\\\\\\\\\workspace\\\\\\\\\\\\\\\\tasks\\\\\\\\\\\\\\\\report-live-send-result.json\\\\\\\"], \\\\\\\"stateDispatchRequestStatus\\\\\\\": \\\\\\\"reconciled_success\\\\\\\", \\\\\\\"stateLiveSendPlanStatus\\\\\\\": \\\\\\\"\\\\\\\"}\\\\n\\\", \\\"stderr\\\": \\\"\\\"}], \\\"queueClosed\\\": true, \\\"lastError\\\": \\\"\\\", \\\"lastAttemptStatus\\\": \\\"success\\\"}\\n\", \"stderr\": \"\"}, \"inboxStatus\": \"consumed\"}\n",
+          "stderr": ""
+        },
+        "pollResult": {
+          "checkedAt": "2026-04-04T15:57:15.783097+08:00",
+          "ok": true,
+          "messageKey": "heartbeat-inbox-check|执行中||heartbeat 自动消费 scheduler observation inbox|2026-04-04T15:57:14.080205+08:00",
+          "consume": {
+            "command": [
+              "python",
+              "tools\\consume_scheduler_observation_bridge.py"
+            ],
+            "returncode": 0,
+            "stdout": "{\"ok\": true, \"messageKey\": \"heartbeat-inbox-check|执行中||heartbeat 自动消费 scheduler observation inbox|2026-04-04T15:57:14.080205+08:00\", \"steps\": [{\"command\": [\"python\", \"tools\\\\task_report_sender_confirm_success.py\", \"--source\", \"scheduler_bridge_consumer\", \"--note\", \"scheduled delivery observed via bridge consumer\"], \"returncode\": 0, \"stdout\": \"{\\\"written\\\": true, \\\"messageKey\\\": \\\"heartbeat-inbox-check|ִ����||heartbeat �Զ����� scheduler observation inbox|2026-04-04T15:57:14.080205+08:00\\\", \\\"status\\\": \\\"success\\\", \\\"source\\\": \\\"scheduler_bridge_consumer\\\", \\\"observationCount\\\": 1}\\n\", \"stderr\": \"\"}, {\"command\": [\"python\", \"tools\\\\task_report_sender_reconcile.py\", \"--note\", \"reconcile after bridge consumer observed delivery\"], \"returncode\": 0, \"stdout\": \"{\\\"action\\\": \\\"reconciled_to_success\\\", \\\"queueLength\\\": 0, \\\"hasPendingConfirmation\\\": false, \\\"hasPendingToolPayload\\\": false, \\\"lastError\\\": \\\"\\\", \\\"matchedObservation\\\": {\\\"observedAt\\\": \\\"2026-04-04T15:57:15.134353+08:00\\\", \\\"messageKey\\\": \\\"heartbeat-inbox-check|ִ����||heartbeat �Զ����� scheduler observation inbox|2026-04-04T15:57:14.080205+08:00\\\", \\\"status\\\": \\\"success\\\", \\\"note\\\": \\\"scheduled delivery observed via bridge consumer\\\", \\\"source\\\": \\\"scheduler_bridge_consumer\\\"}}\\n\", \"stderr\": \"\"}, {\"command\": [\"python\", \"tools\\\\cleanup_stale_report_protocol.py\"], \"returncode\": 0, \"stdout\": \"{\\\"ok\\\": true, \\\"successMessageKey\\\": \\\"heartbeat-inbox-check|ִ����||heartbeat �Զ����� scheduler observation inbox|2026-04-04T15:57:14.080205+08:00\\\", \\\"terminalAt\\\": \\\"2026-04-04T15:57:15.443664+08:00\\\", \\\"removed\\\": [], \\\"kept\\\": [\\\"C:\\\\\\\\Users\\\\\\\\Administrator\\\\\\\\.openclaw\\\\\\\\workspace\\\\\\\\tasks\\\\\\\\report-live-send-result.json\\\"], \\\"stateDispatchRequestStatus\\\": \\\"reconciled_success\\\", \\\"stateLiveSendPlanStatus\\\": \\\"\\\"}\\n\", \"stderr\": \"\"}], \"queueClosed\": true, \"lastError\": \"\", \"lastAttemptStatus\": \"success\"}\n",
+            "stderr": ""
+          },
+          "inboxStatus": "consumed"
+        }
+      }
+    },
+    {
+      "case": "idle_after_consumed",
+      "run": {
+        "command": [
+          "python",
+          "tools\\heartbeat_scheduler_observation.py"
+        ],
+        "returncode": 0,
+        "stdout": "{\"checkedAt\": \"2026-04-04T15:57:16.110264+08:00\", \"ok\": true, \"action\": \"idle\", \"reason\": \"no_ready_scheduler_observation_inbox\", \"inboxStatus\": \"consumed\", \"messageKey\": \"heartbeat-inbox-check|执行中||heartbeat 自动消费 scheduler observation inbox|2026-04-04T15:57:14.080205+08:00\"}\n",
+        "stderr": ""
+      },
+      "result": {
+        "checkedAt": "2026-04-04T15:57:16.110264+08:00",
+        "ok": true,
+        "action": "idle",
+        "reason": "no_ready_scheduler_observation_inbox",
+        "inboxStatus": "consumed",
+        "messageKey": "heartbeat-inbox-check|执行中||heartbeat 自动消费 scheduler observation inbox|2026-04-04T15:57:14.080205+08:00"
+      }
+    }
+  ],
+  "queueLength": 0,
+  "hasPendingToolPayload": false,
+  "hasPendingConfirmation": false,
+  "lastError": "",
+  "lastAttemptStatus": "success",
+  "successAttemptCount": 1,
+  "pendingAttemptCount": 1,
+  "observationCount": 1,
+  "dispatchRequestStatus": "reconciled_success",
+  "finalInboxStatus": "consumed",
+  "idleBeforePending": true,
+  "pendingWasPolled": true,
+  "idleAfterConsumed": true,
+  "closed": true
+}
