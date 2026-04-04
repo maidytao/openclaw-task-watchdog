@@ -43,6 +43,95 @@ The real risk is **silent failure that humans mistake for progress**.
 
 ---
 
+## Installation
+
+This project is meant to be installed into an existing OpenClaw workspace.
+
+### Requirements
+
+Before installing, make sure you already have:
+
+- OpenClaw installed and working
+- a local OpenClaw workspace
+  - Windows: `%USERPROFILE%\.openclaw\workspace`
+  - macOS: `~/.openclaw/workspace`
+- Python available in your shell
+- permission to copy files into the OpenClaw workspace
+
+### Windows
+
+```powershell
+git clone https://github.com/maidytao/openclaw-task-watchdog.git
+cd openclaw-task-watchdog
+powershell -ExecutionPolicy Bypass -File .\scripts\install-windows.ps1
+```
+
+### macOS
+
+```bash
+git clone https://github.com/maidytao/openclaw-task-watchdog.git
+cd openclaw-task-watchdog
+bash ./scripts/install-macos.sh
+```
+
+### What the installer does
+
+The installer copies runtime files into your OpenClaw workspace, including:
+
+- `tools/`
+- `tasks/`
+- `config/`
+- `docs/OPERATE.md`
+
+After install, the project is meant to run from inside the OpenClaw workspace where its file-backed state lives.
+
+---
+
+## First use after install
+
+### 1. Run acceptance
+
+Windows:
+```powershell
+python tools\run_report_delivery_acceptance.py
+```
+
+macOS:
+```bash
+python3 tools/run_report_delivery_acceptance.py
+```
+
+Expected result:
+- acceptance verdict should be `PASS`
+
+### 2. Check current status
+
+Windows:
+```powershell
+python tools\report_delivery_status.py
+```
+
+macOS:
+```bash
+python3 tools/report_delivery_status.py
+```
+
+This tells you whether the watchdog runtime is currently healthy, including queue state, pending state, latest attempt status, dispatch reconciliation state, and latest validation evidence.
+
+### 3. Run the validation suite when needed
+
+Windows:
+```powershell
+python tools\validate_report_delivery_suite.py
+```
+
+macOS:
+```bash
+python3 tools/validate_report_delivery_suite.py
+```
+
+---
+
 ## What this project actually is
 
 This is **not mainly a report sender**.
@@ -159,24 +248,6 @@ python tools/validate_report_delivery_suite.py
 - `config/` configuration templates
 - `scripts/` install/uninstall/bootstrap helpers
 - `docs/` architecture, operations, troubleshooting, quick start
-
----
-
-## Quick start
-
-### Windows
-```powershell
-powershell -ExecutionPolicy Bypass -File .\scripts\install-windows.ps1
-python tools\run_report_delivery_acceptance.py
-python tools\report_delivery_status.py
-```
-
-### macOS
-```bash
-bash ./scripts/install-macos.sh
-python3 tools/run_report_delivery_acceptance.py
-python3 tools/report_delivery_status.py
-```
 
 ---
 
