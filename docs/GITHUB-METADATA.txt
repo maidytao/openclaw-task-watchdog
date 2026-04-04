@@ -1,0 +1,17 @@
+Repository description:
+A hard-delivery runtime and validation kit for OpenClaw report workflows.
+
+Suggested topics:
+openclaw
+automation
+workflow
+delivery
+reconciliation
+heartbeat
+observability
+windows
+macos
+python
+
+Suggested first release title:
+v0.1.0 - Initial public release
