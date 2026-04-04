@@ -1,42 +1,97 @@
-# openclaw-hard-delivery
+# openclaw-task-watchdog
 
-A production-oriented hard-delivery runtime for OpenClaw report workflows.
+A watchdog runtime for long-running OpenClaw tasks that must not silently stall, disappear, or fake progress.
 
-`openclaw-hard-delivery` packages a real hardened delivery pattern for OpenClaw: **send -> pending confirmation -> observed delivery -> reconcile -> cleanup**.
+`openclaw-task-watchdog` exists to solve a more important problem than message delivery: **long-running tasks often look alive after they have already stalled, timed out, or stopped making real progress**. This project makes those failures visible.
 
-It exists for one specific reason: in real OpenClaw report delivery, a `sessions_send` timeout does **not** always mean delivery failed. If you treat timeout as hard failure, you can create duplicate sends, broken state, and false-negative delivery alerts. This toolkit implements the safer model and wraps it with status, validation, acceptance, and operator docs.
+It turns long-task execution into a file-backed, heartbeat-supervised, observation-driven workflow with explicit intermediate states, reconciliation, terminal cleanup, and acceptance checks.
+
+The repository currently ships a hardened report-delivery pipeline as its first production path, but the underlying purpose is broader: **prevent silent interruption, detect no-progress states early, and ensure that "done" means observed and reconciled — not guessed.**
 
 ---
 
-## Why this exists
+## What problem this solves
 
-In practical OpenClaw automation, delivery has a messy middle:
+In real automation, long tasks frequently fail in ways that are hard to see:
 
-- a tool-side send can time out
-- the chat message may still arrive successfully
-- the system needs an explicit `pending_confirmation` state
-- delivery should close only after session-side observation
-- background loops must not re-enter after success
+- a task stalls but still looks "running"
+- a send operation times out even though delivery may still happen
+- the system stops making progress without declaring failure
+- background loops re-enter and create duplicate or conflicting work
+- operators discover the problem too late because the middle state was invisible
 
-This repository turns those lessons into a reusable kit.
+The real risk is not just failure.
 
-## Core model
+The real risk is **silent failure that humans mistake for progress**.
 
-The delivery lifecycle used here is:
+---
 
-1. prepare/send or handoff
+## What this project actually is
+
+This is **not mainly a report sender**.
+
+It is a **long-task watchdog runtime** for OpenClaw, with report delivery as the first hardened implementation.
+
+The core idea is simple:
+
+1. tasks must write state to disk
+2. middle states must be explicit
+3. timeout must not be confused with confirmed failure
+4. success must be observation-backed
+5. terminal cleanup must make the final state unambiguous
+6. later loops must not re-enter completed work
+
+---
+
+## Why ordinary retries are not enough
+
+A naive retry loop cannot answer the important questions:
+
+- Did the task actually make progress?
+- Did the message really fail, or only time out at the transport boundary?
+- Is the task still active, or just stuck?
+- Is the current state terminal, pending confirmation, or silently broken?
+- Will the next scheduler cycle duplicate already-closed work?
+
+This project adds the missing layer: **observable, reconciled, file-backed task supervision**.
+
+---
+
+## Watchdog model
+
+The hardened lifecycle used in this repository is:
+
+1. prepare work or handoff
 2. enter `pending_confirmation`
-3. observe actual delivery from the session side
+3. observe actual delivery or external evidence from the session side
 4. reconcile from evidence
-5. clean protocol artifacts into terminal state
+5. clean protocol artifacts into terminal success state
 
-That model is backed by file evidence rather than fragile console assumptions.
+That model is intentionally built around persisted JSON evidence instead of fragile console assumptions.
+
+---
+
+## Current production path
+
+The current production-ready path is a hardened OpenClaw report-delivery workflow with:
+
+- file-backed sender state
+- dispatch request planning
+- scheduler observation bridge
+- heartbeat-consumed inbox polling
+- observation-driven reconcile
+- terminal cleanup
+- reentry guards
+- validation, smoke, and acceptance tooling
+
+That path proves the broader model: **long tasks can be supervised instead of merely launched**.
 
 ---
 
 ## Features
 
-- **Hard-delivery runtime** for OpenClaw report workflows
+- **Long-task watchdog runtime** for OpenClaw workflows
+- **Explicit middle states** such as `pending_confirmation` and `reconciled_success`
 - **Observation-driven reconciliation** instead of timeout-as-failure
 - **Heartbeat-consumed observation inbox** for session-side closure
 - **Reentry guards and terminal cleanup** to prevent duplicate work
@@ -71,18 +126,18 @@ python tools/validate_report_delivery_suite.py
 ### Windows
 - Scheduled Task driven runner flow
 - batch/bootstrap helpers
-- validation and acceptance flow verified during extraction
+- validated runner + heartbeat closed-loop path
 
 ### macOS
 - shell install baseline included
 - repository layout prepared for launchd-style integration
-- additional machine-specific adaptation may still be needed depending on local OpenClaw layout
+- machine-specific OpenClaw adaptation may still be needed
 
 ---
 
 ## Repository layout
 
-- `tools/` runtime, operator, validation, and acceptance scripts
+- `tools/` runtime, watchdog, operator, validation, and acceptance scripts
 - `tasks/` task/runtime artifacts and example result files
 - `config/` configuration templates
 - `scripts/` install/uninstall/bootstrap helpers
@@ -108,9 +163,9 @@ python3 tools/report_delivery_status.py
 
 ---
 
-## When the system is healthy
+## Healthy terminal state
 
-Typical healthy terminal state looks like:
+A typical healthy terminal state looks like:
 
 - queue is empty
 - no `pendingToolPayload`
@@ -122,11 +177,11 @@ Typical healthy terminal state looks like:
 
 ---
 
-## Important scope note
+## Scope note
 
 This is **not** a generic messaging library.
 
-It is an **OpenClaw-specific delivery hardening kit** built around:
+It is an **OpenClaw-specific long-task supervision and delivery hardening kit** built around:
 
 - OpenClaw workspace files
 - session-side observation
@@ -134,7 +189,7 @@ It is an **OpenClaw-specific delivery hardening kit** built around:
 - file-backed reconciliation
 - task/state/result artifacts
 
-If you want a generic library, this repo is intentionally more opinionated than that.
+If you need a generic queue or transport abstraction, this repository is intentionally more opinionated than that.
 
 ---
 

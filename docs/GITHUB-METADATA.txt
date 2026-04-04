@@ -1,9 +1,14 @@
-Repository description:
-A hard-delivery runtime and validation kit for OpenClaw report workflows.
+Repository name:
+openclaw-task-watchdog
+
+Description:
+A watchdog runtime for long-running OpenClaw tasks that must not silently stall, disappear, or fake progress.
 
 Suggested topics:
 openclaw
 automation
+long-running-tasks
+task-watchdog
 workflow
 delivery
 reconciliation
@@ -12,6 +17,3 @@ observability
 windows
 macos
 python
-
-Suggested first release title:
-v0.1.0 - Initial public release
