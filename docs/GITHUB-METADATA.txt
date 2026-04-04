@@ -1,22 +1,28 @@
 Repository name:
 openclaw-task-watchdog
 
-Description:
+Short description:
 A watchdog runtime for long-running OpenClaw tasks that must not silently stall, disappear, or fake progress.
 
-Short homepage alternative:
-Make silent long-task interruption visible before humans mistake silence for progress.
+Ultra-short description:
+Stop long-running OpenClaw tasks from silently stalling in the middle.
 
 Suggested topics:
-openclaw
-automation
-long-running-tasks
-task-watchdog
-workflow
-heartbeat
-observability
-reconciliation
-failure-detection
-windows
-macos
-python
+- openclaw
+- automation
+- long-running-tasks
+- task-watchdog
+- workflow
+- heartbeat
+- observability
+- reconciliation
+- failure-detection
+- windows
+- macos
+- python
+
+Homepage message priorities:
+1. This is a watchdog for long-running OpenClaw tasks.
+2. It prevents silent stall, fake progress, and silent interruption.
+3. It has explicit state, observation, reconciliation, and cleanup.
+4. New users should see install, acceptance, and status commands immediately.

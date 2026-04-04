@@ -1,13 +1,43 @@
 # Repo short texts
 
-## One-line description
+## One-line tagline
+Stop long-running OpenClaw tasks from silently stalling in the middle.
+
+## One-sentence description
 A watchdog runtime for long-running OpenClaw tasks that must not silently stall, disappear, or fake progress.
 
-## Short pitch
-openclaw-task-watchdog helps OpenClaw operators detect silent task interruption, no-progress states, and false-alive runs before humans mistake silence for progress.
+## Slightly longer description
+`openclaw-task-watchdog` adds a file-backed watchdog layer to OpenClaw long tasks so operators can see uncertain middle states, wait for observation, reconcile from evidence, and prevent silent failure from being mistaken for progress.
 
-## Two-sentence pitch
-This repository turns long-running OpenClaw work into a supervised, file-backed, observation-driven execution loop with heartbeat polling, reconciliation, and terminal cleanup. Its first production path is hardened report delivery, but the real purpose is broader: prevent silent interruption and make long-task failure visible early.
+## Problem-first version
+Long-running automation often fails in the middle while still looking alive. This project exists to make that failure visible before humans mistake silence for progress.
 
-## Plain-language explanation
-If a long task gets stuck halfway, times out in the middle, or stops producing real output while still looking alive, this project is meant to catch that and make it visible. It gives long OpenClaw tasks a watchdog layer so they can be checked, observed, reconciled, and cleanly closed instead of silently drifting.
+## Installation-first version
+Install into an OpenClaw workspace, run acceptance, then use the status command to confirm the watchdog runtime is healthy.
+
+## First commands to show in docs or posts
+```bash
+python tools/run_report_delivery_acceptance.py
+python tools/report_delivery_status.py
+python tools/validate_report_delivery_suite.py
+```
+
+## Three-value version
+This project is for:
+- stopping silent stall
+- exposing fake progress
+- turning uncertain middle state into observed, reconciled terminal state
+
+## Topics block
+- openclaw
+- automation
+- long-running-tasks
+- task-watchdog
+- workflow
+- heartbeat
+- observability
+- reconciliation
+- failure-detection
+- windows
+- macos
+- python
