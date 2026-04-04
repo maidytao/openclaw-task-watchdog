@@ -1,29 +1,65 @@
 # openclaw-task-watchdog
 
-**Make silent long-task interruption visible before humans mistake silence for progress.**
+**Stop long-running OpenClaw tasks from silently stalling in the middle.**
 
 A watchdog runtime for long-running OpenClaw tasks that must not silently stall, disappear, or fake progress.
 
-`openclaw-task-watchdog` exists to solve a more important problem than message delivery: **long-running tasks often look alive after they have already stalled, timed out, or stopped making real progress**. This project makes those failures visible.
-
-It turns long-task execution into a file-backed, heartbeat-supervised, observation-driven workflow with explicit intermediate states, reconciliation, terminal cleanup, and acceptance checks.
-
-The repository currently ships a hardened report-delivery pipeline as its first production path, but the underlying purpose is broader: **prevent silent interruption, detect no-progress states early, and ensure that "done" means observed and reconciled — not guessed.**
+`openclaw-task-watchdog` exists because long tasks often still look alive after they have already stalled, timed out, or stopped making real progress. This project makes that failure visible before humans mistake silence for progress.
 
 ---
 
-## What you get
+## In one minute
 
-This project gives long-running OpenClaw tasks a watchdog layer that can:
+### What it is
+A file-backed watchdog runtime for OpenClaw long tasks.
 
-- detect when work stops making real progress
-- preserve explicit middle states instead of hiding them
-- keep timeout from being confused with confirmed failure
-- wait for observed evidence before closing success
-- prevent reentry after terminal completion
-- expose status, validation, and acceptance with single commands
+### Why it exists
+To prevent three expensive failure modes:
+- silent stall
+- fake progress
+- silent interruption
 
-If someone scans only this section, they should already understand the point: **this is for preventing long tasks from silently dying in the middle without anyone noticing.**
+### How it works
+1. write explicit task state
+2. allow uncertain middle states such as `pending_confirmation`
+3. observe delivery or external evidence from the session side
+4. reconcile from evidence
+5. clean up into a clear terminal success state
+
+### How to install
+
+#### Windows
+```powershell
+git clone https://github.com/maidytao/openclaw-task-watchdog.git
+cd openclaw-task-watchdog
+powershell -ExecutionPolicy Bypass -File .\scripts\install-windows.ps1
+```
+
+#### macOS
+```bash
+git clone https://github.com/maidytao/openclaw-task-watchdog.git
+cd openclaw-task-watchdog
+bash ./scripts/install-macos.sh
+```
+
+### What to run first after install
+
+#### Acceptance
+```bash
+python tools/run_report_delivery_acceptance.py
+```
+
+#### Status
+```bash
+python tools/report_delivery_status.py
+```
+
+#### Validation suite
+```bash
+python tools/validate_report_delivery_suite.py
+```
+
+If those are the only commands someone sees, they should still know how to install, verify, and inspect the system.
 
 ---
 
@@ -43,7 +79,7 @@ The real risk is **silent failure that humans mistake for progress**.
 
 ---
 
-## Installation
+## Installation details
 
 This project is meant to be installed into an existing OpenClaw workspace.
 
@@ -58,23 +94,7 @@ Before installing, make sure you already have:
 - Python available in your shell
 - permission to copy files into the OpenClaw workspace
 
-### Windows
-
-```powershell
-git clone https://github.com/maidytao/openclaw-task-watchdog.git
-cd openclaw-task-watchdog
-powershell -ExecutionPolicy Bypass -File .\scripts\install-windows.ps1
-```
-
-### macOS
-
-```bash
-git clone https://github.com/maidytao/openclaw-task-watchdog.git
-cd openclaw-task-watchdog
-bash ./scripts/install-macos.sh
-```
-
-### What the installer does
+### What the installer copies
 
 The installer copies runtime files into your OpenClaw workspace, including:
 
@@ -160,20 +180,6 @@ A naive retry loop cannot answer the important questions:
 - Will the next scheduler cycle duplicate already-closed work?
 
 This project adds the missing layer: **observable, reconciled, file-backed task supervision**.
-
----
-
-## Watchdog model
-
-The hardened lifecycle used in this repository is:
-
-1. prepare work or handoff
-2. enter `pending_confirmation`
-3. observe actual delivery or external evidence from the session side
-4. reconcile from evidence
-5. clean protocol artifacts into terminal success state
-
-That model is intentionally built around persisted JSON evidence instead of fragile console assumptions.
 
 ---
 
