@@ -1,5 +1,7 @@
 # openclaw-task-watchdog
 
+> New here? Start with [`START-HERE.md`](./START-HERE.md).
+
 **Stop long-running OpenClaw tasks from silently stalling in the middle.**
 
 A watchdog runtime for long-running OpenClaw tasks that must not silently stall, disappear, or fake progress.
