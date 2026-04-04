@@ -1,5 +1,7 @@
 # openclaw-task-watchdog
 
+**Make silent long-task interruption visible before humans mistake silence for progress.**
+
 A watchdog runtime for long-running OpenClaw tasks that must not silently stall, disappear, or fake progress.
 
 `openclaw-task-watchdog` exists to solve a more important problem than message delivery: **long-running tasks often look alive after they have already stalled, timed out, or stopped making real progress**. This project makes those failures visible.
@@ -7,6 +9,21 @@ A watchdog runtime for long-running OpenClaw tasks that must not silently stall,
 It turns long-task execution into a file-backed, heartbeat-supervised, observation-driven workflow with explicit intermediate states, reconciliation, terminal cleanup, and acceptance checks.
 
 The repository currently ships a hardened report-delivery pipeline as its first production path, but the underlying purpose is broader: **prevent silent interruption, detect no-progress states early, and ensure that "done" means observed and reconciled — not guessed.**
+
+---
+
+## What you get
+
+This project gives long-running OpenClaw tasks a watchdog layer that can:
+
+- detect when work stops making real progress
+- preserve explicit middle states instead of hiding them
+- keep timeout from being confused with confirmed failure
+- wait for observed evidence before closing success
+- prevent reentry after terminal completion
+- expose status, validation, and acceptance with single commands
+
+If someone scans only this section, they should already understand the point: **this is for preventing long tasks from silently dying in the middle without anyone noticing.**
 
 ---
 
