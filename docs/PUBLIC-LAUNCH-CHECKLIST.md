@@ -9,16 +9,18 @@
 
 ## Suggested GitHub About
 **Description**
-A hard-delivery runtime and validation kit for OpenClaw report workflows.
+A watchdog runtime for long-running OpenClaw tasks that must not silently stall, disappear, or fake progress.
 
 **Topics**
 - openclaw
 - automation
+- long-running-tasks
+- task-watchdog
 - workflow
-- delivery
-- reconciliation
 - heartbeat
 - observability
+- reconciliation
+- failure-detection
 - windows
 - macos
 - python
@@ -38,5 +40,6 @@ Use `docs/RELEASE-v0.1.0.md`
 - Default branch contains latest README and docs
 - License is present
 - Acceptance/status entrypoints are documented
-- Public repo description matches runtime purpose
+- Public repo description matches watchdog purpose
+- Installation and first-use steps are obvious to new visitors
 - Release body matches current shipped scope
