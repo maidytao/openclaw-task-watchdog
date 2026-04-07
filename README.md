@@ -215,6 +215,29 @@ It now also contains a more general **resumable long-task runtime** for OpenClaw
 
 ---
 
+## What's new in v0.2.0
+
+The repository now includes a broader resumable-task supervision layer on top of the original report-delivery watchdog path.
+
+### Newly added runtime pieces
+- `task_runner.py`
+- `task_executor.py`
+- `task_reporter.py`
+- `normalize_completed_task_state.py`
+- `sync_report_delivery_terminal_state.py`
+
+### Newly added resilience tooling
+- unified resumable-system validation
+- three rounds of chaos / fault-injection testing
+- one-command full resilience acceptance
+- final resilience rating and included report artifacts
+
+If you only remember one thing from this update, remember this:
+
+**the project now proves not only that delivery can be supervised, but that resumable long tasks can be persisted, restarted, validated, stress-tested, and closed cleanly.**
+
+---
+
 ## Features
 
 - **Long-task watchdog runtime** for OpenClaw workflows
@@ -267,6 +290,83 @@ python tools/run_resilience_chaos_tests.py
 python tools/run_resilience_chaos_tests_round2.py
 python tools/run_resilience_chaos_tests_round3.py
 ```
+
+---
+
+## Architecture overview
+
+At a high level, the runtime works like this:
+
+1. a task writes explicit state to disk
+2. heartbeat logic checks whether it is overdue or silent
+3. runner logic decides whether to continue, restart, or open a circuit breaker
+4. executor logic performs a concrete next action
+5. observation or completion evidence is collected
+6. terminal sync / normalization cleans the task into a clear completed state
+7. validation and resilience scripts verify that the whole chain survives real failure modes
+
+In practice, the repository currently contains two connected supervision paths:
+
+- **report-delivery watchdog path**
+- **general resumable-task runtime path**
+
+The report-delivery path is the original hardened implementation.
+
+The resumable-task path is the broader expansion that proves the model can supervise more than just message delivery.
+
+---
+
+## How to run resilience tests
+
+### Round 1
+```bash
+python tools/run_resilience_chaos_tests.py
+```
+
+### Round 2
+```bash
+python tools/run_resilience_chaos_tests_round2.py
+```
+
+### Round 3
+```bash
+python tools/run_resilience_chaos_tests_round3.py
+```
+
+### Full acceptance
+```bash
+python tools/run_full_resilience_acceptance.py
+```
+
+### Unified validation
+```bash
+python tools/validate_resumable_system.py
+```
+
+---
+
+## How to read the included reports
+
+The repository contains both runtime config and generated evidence.
+
+### Most important result files
+- `tasks/resumable-system-test-report.json`
+- `tasks/resilience-chaos-report.json`
+- `tasks/resilience-chaos-report-round2.json`
+- `tasks/resilience-chaos-report-round3.json`
+- `tasks/resilience-final-rating.json`
+- `tasks/full-resilience-acceptance-report.json`
+
+### What each one tells you
+- **`resumable-system-test-report.json`**: whether the core resumable supervision chain is healthy
+- **`resilience-chaos-report*.json`**: what happened in each active breakage round
+- **`resilience-final-rating.json`**: condensed final resilience score / conclusion
+- **`full-resilience-acceptance-report.json`**: end-to-end acceptance summary for the expanded runtime
+
+If you want a fast read:
+1. start with `tasks/resilience-final-rating.json`
+2. then open `tasks/full-resilience-acceptance-report.json`
+3. then inspect individual round reports only if you want test-by-test detail
 
 ---
 
