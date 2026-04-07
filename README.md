@@ -187,8 +187,9 @@ This project adds the missing layer: **observable, reconciled, file-backed task 
 
 ## Current production path
 
-The current production-ready path is a hardened OpenClaw report-delivery workflow with:
+The current production path now has two layers:
 
+### 1. Hardened report-delivery watchdog path
 - file-backed sender state
 - dispatch request planning
 - scheduler observation bridge
@@ -198,7 +199,19 @@ The current production-ready path is a hardened OpenClaw report-delivery workflo
 - reentry guards
 - validation, smoke, and acceptance tooling
 
-That path proves the broader model: **long tasks can be supervised instead of merely launched**.
+### 2. General resumable-task supervision path
+- file-backed `current-task` ledger
+- heartbeat watchdog for overdue or silent work
+- runner-driven restart / restart-circuit-breaker logic
+- executor-driven concrete next-action execution
+- completed-state normalization from verifiable evidence
+- terminal state sync for real-world boundary states like `pending_confirmation`
+- multi-round resilience / chaos testing
+- full one-command acceptance report
+
+That means the repository is no longer only a report-delivery watchdog demo.
+
+It now also contains a more general **resumable long-task runtime** for OpenClaw.
 
 ---
 
@@ -209,6 +222,11 @@ That path proves the broader model: **long tasks can be supervised instead of me
 - **Observation-driven reconciliation** instead of timeout-as-failure
 - **Heartbeat-consumed observation inbox** for session-side closure
 - **Reentry guards and terminal cleanup** to prevent duplicate work
+- **Resumable task runner** for stalled or restart-required work
+- **Task executor** for concrete next-step advancement
+- **Completed-state normalization** from verifiable evidence
+- **Resilience / chaos test suite** with multi-round fault injection
+- **Full acceptance report** for end-to-end resilience verification
 - **Single-command status entrypoint**
 - **Single-command acceptance entrypoint**
 - **Validation suite** covering runner, heartbeat, and smoke flows
@@ -218,19 +236,36 @@ That path proves the broader model: **long tasks can be supervised instead of me
 
 ## Entry points
 
-### Status
+### Report-delivery status
 ```bash
 python tools/report_delivery_status.py
 ```
 
-### Acceptance
+### Report-delivery acceptance
 ```bash
 python tools/run_report_delivery_acceptance.py
 ```
 
-### Validation suite
+### Report-delivery validation suite
 ```bash
 python tools/validate_report_delivery_suite.py
+```
+
+### Full resumable-system acceptance
+```bash
+python tools/run_full_resilience_acceptance.py
+```
+
+### Unified resumable-system validation
+```bash
+python tools/validate_resumable_system.py
+```
+
+### Chaos / resilience rounds
+```bash
+python tools/run_resilience_chaos_tests.py
+python tools/run_resilience_chaos_tests_round2.py
+python tools/run_resilience_chaos_tests_round3.py
 ```
 
 ---

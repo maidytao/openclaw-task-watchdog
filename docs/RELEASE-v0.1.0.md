@@ -18,6 +18,63 @@ This release packages a practical OpenClaw supervision model for long tasks: mak
 - Single-command status, validation suite, and acceptance entrypoints
 - Windows and macOS packaging baseline
 
+## Post-release expansion now included in the repository
+
+After the initial public release, the repository was extended with a broader resumable-task runtime and resilience verification layer.
+
+### Newly added runtime capabilities
+- `task_runner.py` for resumable task progression and restart control
+- `task_executor.py` for concrete next-action execution
+- `task_reporter.py` for richer reporting flow support
+- `sync_report_delivery_terminal_state.py` for handling real-world acceptable terminal boundary states such as `pending_confirmation`
+- `normalize_completed_task_state.py` for cleanup of dirty completed-state history
+
+### Newly added validation and resilience tooling
+- `validate_resumable_system.py` as a unified system-level validator
+- `validate_runner_reentry_guard.py`
+- `validate_runner_stability.py`
+- `validate_scheduler_real_run.py`
+- `validate_terminal_state_sync.py`
+- `run_resilience_chaos_tests.py`
+- `run_resilience_chaos_tests_round2.py`
+- `run_resilience_chaos_tests_round3.py`
+- `run_full_resilience_acceptance.py`
+
+### Newly added task/runtime config and shell entrypoints
+- `tasks/heartbeat-config.json`
+- `tasks/runner-config.json`
+- `tasks/executor-config.json`
+- `tasks/task-registry.json`
+- `tasks/task-types.json`
+- `tasks/executor-actions.json`
+- `tasks/heartbeat-runner.bat`
+- `tasks/runner.bat`
+- `tasks/executor.bat`
+
+### Included verification artifacts
+- unified resumable-system validation report
+- runner reentry/stability reports
+- scheduler real-run report
+- terminal sync report
+- completed-task normalization result
+- three rounds of chaos / resilience test reports
+- final resilience rating
+- full resilience acceptance report
+
+## What this expansion proves
+
+The project now demonstrates more than report-delivery supervision.
+
+It shows that an OpenClaw long task can:
+- persist state
+- survive interruption
+- be restarted under rules
+- execute concrete next actions
+- reconcile from evidence
+- normalize into a clean terminal state
+- withstand active breakage testing
+- produce a final resilience report
+
 ## Core model
 
 1. prepare work or handoff
