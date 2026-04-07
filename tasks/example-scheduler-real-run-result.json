@@ -1,0 +1,56 @@
+{
+  "checkedAt": "2026-04-07T18:06:16.910110+08:00",
+  "taskName": "OpenClaw Report Delivery Runner",
+  "steps": [
+    {
+      "seededAt": "2026-04-07T18:06:13.423504+08:00",
+      "taskName": "OpenClaw Report Delivery Runner"
+    },
+    {
+      "command": [
+        "python",
+        "tools\\report_delivery_scheduler_status.py"
+      ],
+      "returncode": 0,
+      "stdout": "{\"checkedAt\": \"2026-04-07T18:06:13.742768+08:00\", \"taskName\": \"OpenClaw Report Delivery Runner\", \"installed\": true, \"query\": {\"returncode\": 0, \"stdout\": \"\\n�ļ���: \\\\\\n������:                             WIN-QPG844GIPC6\\n������:                             \\\\OpenClaw Report Delivery Runner\\n�´�����ʱ��:                       2026/4/7 ���ڶ� 18:07:00\\nģʽ:                               ����\\n��¼״̬:                           ֻʹ�ý�����ʽ\\n�ϴ�����ʱ��:                       2026/4/7 ���ڶ� 18:05:31\\n�ϴν��?                           0\\n������:                             WIN-QPG844GIPC6\\\\Administrator\\nҪ���е�����:                       \\\"C:\\\\Users\\\\Administrator\\\\.openclaw\\\\workspace\\\\tasks\\\\report-delivery-runner.bat\\\" \\n��ʼ��:                             N/A\\nע��:                               N/A\\n�ƻ�����״̬:                       ������\\n����ʱ��:                           �ѽ���\\n��Դ����:                           �ڵ��ģʽͣ�? ���õ������\\n��Ϊ�û�����:                       Administrator\\nɾ��û�мƻ�������:                 �ѽ���\\n���������?X Сʱ X ���ӣ�ֹͣ����: 72:00:00\\n�ƻ�:                               �ƻ������ڴ˸�ʽ�в����á�\\n�ƻ�����:                           һ����, ���� \\n��ʼʱ��:                           12:32:00\\n��ʼ����:                           2026/4/4 ������\\n��������:                           N/A\\n��:                                 N/A\\n��:                                 N/A\\n�ظ�: ÿ:                           0 Сʱ�� 5 ����\\n�ظ�: ��ֹ: ʱ��:                   ��\\n�ظ�: ��ֹ: ����ʱ��:               �ѽ���\\n�ظ�: ����������У�ͣ�?           �ѽ���\\n\", \"stderr\": \"\"}}\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "schtasks",
+        "/Run",
+        "/TN",
+        "OpenClaw Report Delivery Runner"
+      ],
+      "returncode": 0,
+      "stdout": "�ɹ�: �������� \"OpenClaw Report Delivery Runner\"��\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "schtasks",
+        "/Query",
+        "/TN",
+        "OpenClaw Report Delivery Runner",
+        "/V",
+        "/FO",
+        "LIST"
+      ],
+      "returncode": 0,
+      "stdout": "\n�ļ���: \\\n������:                             WIN-QPG844GIPC6\n������:                             \\OpenClaw Report Delivery Runner\n�´�����ʱ��:                       2026/4/7 ���ڶ� 18:07:00\nģʽ:                               ����\n��¼״̬:                           ֻʹ�ý�����ʽ\n�ϴ�����ʱ��:                       2026/4/7 ���ڶ� 18:06:13\n�ϴν��?                           0\n������:                             WIN-QPG844GIPC6\\Administrator\nҪ���е�����:                       \"C:\\Users\\Administrator\\.openclaw\\workspace\\tasks\\report-delivery-runner.bat\" \n��ʼ��:                             N/A\nע��:                               N/A\n�ƻ�����״̬:                       ������\n����ʱ��:                           �ѽ���\n��Դ����:                           �ڵ��ģʽͣ�? ���õ������\n��Ϊ�û�����:                       Administrator\nɾ��û�мƻ�������:                 �ѽ���\n���������?X Сʱ X ���ӣ�ֹͣ����: 72:00:00\n�ƻ�:                               �ƻ������ڴ˸�ʽ�в����á�\n�ƻ�����:                           һ����, ���� \n��ʼʱ��:                           12:32:00\n��ʼ����:                           2026/4/4 ������\n��������:                           N/A\n��:                                 N/A\n��:                                 N/A\n�ظ�: ÿ:                           0 Сʱ�� 5 ����\n�ظ�: ��ֹ: ʱ��:                   ��\n�ظ�: ��ֹ: ����ʱ��:               �ѽ���\n�ظ�: ����������У�ͣ�?           �ѽ���\n",
+      "stderr": ""
+    }
+  ],
+  "queueLength": 1,
+  "hasPendingToolPayload": true,
+  "hasPendingConfirmation": true,
+  "lastError": "pending confirmation after sessions_send timeout",
+  "successAttempt": {},
+  "liveResultStatus": "reconciled_success",
+  "schedulerStateInstalled": true,
+  "runnerTriggered": true,
+  "advancedToPendingConfirmation": true,
+  "boundary": "scheduled_task_can_trigger_runner_and_drive_to_pending_confirmation_but_cannot_self-observe_chat_delivery",
+  "scheduledRunHealthy": true
+}
+

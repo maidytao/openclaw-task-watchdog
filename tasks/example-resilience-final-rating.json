@@ -3,19 +3,19 @@
   "generatedAt": "2026-04-07T19:50:06.466198+08:00",
   "rounds": [
     {
-      "report": "tasks/resilience-chaos-report.json",
+      "report": "tasks/example-resilience-chaos-report.json",
       "overallOk": true,
       "passedCount": 5,
       "scenarioCount": 5
     },
     {
-      "report": "tasks/resilience-chaos-report-round2.json",
+      "report": "tasks/example-resilience-chaos-report-round2.json",
       "overallOk": true,
       "passedCount": 5,
       "scenarioCount": 5
     },
     {
-      "report": "tasks/resilience-chaos-report-round3.json",
+      "report": "tasks/example-resilience-chaos-report-round3.json",
       "overallOk": true,
       "passedCount": 5,
       "scenarioCount": 5
@@ -25,5 +25,6 @@
   "totalPassed": 15,
   "passRate": 1.0,
   "rating": "A",
-  "conclusion": "核心恢复、脏状态容错、事故面降级与收口链路已通过三轮主动破坏测试。"
+  "conclusion": "核心恢复、脏状态容错、事故面降级与收口链路已通过三轮主动破坏测试�?
 }
+

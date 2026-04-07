@@ -39,16 +39,16 @@ The repository now includes a broader **resumable long-task runtime** for OpenCl
 
 ## Included reports
 
-This release includes generated verification artifacts, including:
-- unified resumable-system test report
-- runner reentry guard result
-- runner stability result
-- scheduler real-run result
-- terminal-state-sync result
-- completed-task normalization result
-- three chaos resilience round reports
-- final resilience rating
-- full resilience acceptance report
+This release includes generated verification artifacts committed as **example evidence files**, including:
+- example unified resumable-system test report
+- example runner reentry guard result
+- example runner stability result
+- example scheduler real-run result
+- example terminal-state-sync result
+- example completed-task normalization result
+- three example chaos resilience round reports
+- example final resilience rating
+- example full resilience acceptance report
 
 ## Why this release matters
 

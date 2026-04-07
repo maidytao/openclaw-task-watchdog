@@ -350,22 +350,22 @@ python tools/validate_resumable_system.py
 The repository contains both runtime config and generated evidence.
 
 ### Most important result files
-- `tasks/resumable-system-test-report.json`
-- `tasks/resilience-chaos-report.json`
-- `tasks/resilience-chaos-report-round2.json`
-- `tasks/resilience-chaos-report-round3.json`
-- `tasks/resilience-final-rating.json`
-- `tasks/full-resilience-acceptance-report.json`
+- `tasks/example-resumable-system-test-report.json`
+- `tasks/example-resilience-chaos-report.json`
+- `tasks/example-resilience-chaos-report-round2.json`
+- `tasks/example-resilience-chaos-report-round3.json`
+- `tasks/example-resilience-final-rating.json`
+- `tasks/example-full-resilience-acceptance-report.json`
 
 ### What each one tells you
-- **`resumable-system-test-report.json`**: whether the core resumable supervision chain is healthy
-- **`resilience-chaos-report*.json`**: what happened in each active breakage round
-- **`resilience-final-rating.json`**: condensed final resilience score / conclusion
-- **`full-resilience-acceptance-report.json`**: end-to-end acceptance summary for the expanded runtime
+- **`example-resumable-system-test-report.json`**: whether the core resumable supervision chain is healthy
+- **`example-resilience-chaos-report*.json`**: what happened in each active breakage round
+- **`example-resilience-final-rating.json`**: condensed final resilience score / conclusion
+- **`example-full-resilience-acceptance-report.json`**: end-to-end acceptance summary for the expanded runtime
 
 If you want a fast read:
-1. start with `tasks/resilience-final-rating.json`
-2. then open `tasks/full-resilience-acceptance-report.json`
+1. start with `tasks/example-resilience-final-rating.json`
+2. then open `tasks/example-full-resilience-acceptance-report.json`
 3. then inspect individual round reports only if you want test-by-test detail
 
 ---

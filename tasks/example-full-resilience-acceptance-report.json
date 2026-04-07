@@ -12,7 +12,7 @@
     {
       "name": "round1_core_recovery",
       "script": "run_resilience_chaos_tests.py",
-      "report": "tasks/resilience-chaos-report.json",
+      "report": "tasks/example-resilience-chaos-report.json",
       "exec": {
         "returncode": 0,
         "stdout": "{\"status\": \"ok\", \"overallOk\": true, \"passedCount\": 5, \"scenarioCount\": 5}\n",
@@ -26,7 +26,7 @@
     {
       "name": "round2_dirty_state_and_corruption",
       "script": "run_resilience_chaos_tests_round2.py",
-      "report": "tasks/resilience-chaos-report-round2.json",
+      "report": "tasks/example-resilience-chaos-report-round2.json",
       "exec": {
         "returncode": 0,
         "stdout": "{\"status\": \"ok\", \"overallOk\": true, \"passedCount\": 5, \"scenarioCount\": 5}\n",
@@ -40,7 +40,7 @@
     {
       "name": "round3_incident_surface_and_conflict",
       "script": "run_resilience_chaos_tests_round3.py",
-      "report": "tasks/resilience-chaos-report-round3.json",
+      "report": "tasks/example-resilience-chaos-report-round3.json",
       "exec": {
         "returncode": 0,
         "stdout": "{\"status\": \"ok\", \"overallOk\": true, \"passedCount\": 5, \"scenarioCount\": 5, \"rating\": \"A\", \"passRate\": 1.0}\n",
@@ -52,5 +52,6 @@
       "failedScenarios": []
     }
   ],
-  "finalRatingFile": "tasks/resilience-final-rating.json"
+  "finalRatingFile": "tasks/example-resilience-final-rating.json"
 }
+

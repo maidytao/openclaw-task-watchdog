@@ -25,6 +25,6 @@ In a real installation, your local OpenClaw workspace will generate its own task
 
 ## Files most readers should start with
 
-- `tasks/resilience-final-rating.json`
-- `tasks/full-resilience-acceptance-report.json`
-- `tasks/resumable-system-test-report.json`
+- `tasks/example-resilience-final-rating.json`
+- `tasks/example-full-resilience-acceptance-report.json`
+- `tasks/example-resumable-system-test-report.json`
