@@ -1,16 +1,16 @@
 {
-  "feishu-image-outbound-fix": {
-    "taskIdContains": "feishu-image-outbound-fix",
+  "example-task-type": {
+    "taskIdContains": "example-task-type",
     "steps": [
-      {
-        "type": "command",
-        "name": "inspect_agent_runner_and_feishu_paths",
-        "command": "Select-String -Path \"C:\\Users\\Administrator\\AppData\\Roaming\\npm\\node_modules\\openclaw\\dist\\*.js\" -Pattern \"agent-runner.runtime|sendMediaFeishu|mediaUrls|pendingToolMedia\" | Select-Object -First 120 | ForEach-Object { \"{0}:{1}:{2}\" -f $_.Path, $_.LineNumber, $_.Line.Trim() }"
-      },
       {
         "type": "command",
         "name": "inspect_task_state",
         "command": "Get-Content tasks\\current-task.json"
+      },
+      {
+        "type": "command",
+        "name": "show_runtime_inputs",
+        "command": "Get-ChildItem tasks | Select-Object Name"
       }
     ]
   }

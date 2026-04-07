@@ -6,39 +6,38 @@
         "restartStatus": [
           "restart_required"
         ],
-        "restartToStatus": "执行中",
-        "defaultRestartApproach": "任务重启后新方案：先恢复任务推进机制，再要求进入新的具体执行步骤",
-        "defaultRestartBlocker": "旧方案已失效，已由 task_runner 自动重启为新方案。",
-        "defaultRestartNextAction": "向用户/主会话明确宣布旧方案失效，并以一个具体可执行步骤重新开始任务。"
+        "restartToStatus": "running",
+        "defaultRestartApproach": "Restart with a new execution approach that can produce verifiable output.",
+        "defaultRestartBlocker": "Previous approach no longer appears effective. task_runner restarted the task under a new approach.",
+        "defaultRestartNextAction": "Announce the failed approach and resume with one concrete executable next step."
       },
       "executor": {
         "plan": [
-          "确认当前任务的真实目标与可验证产物",
-          "识别上一轮失败点并切换执行策略",
-          "推进一个最小但真实可验证的下一步",
-          "记录结果与下一步"
+          "confirm the real task goal and expected evidence",
+          "identify the previous failure point and switch execution strategy",
+          "advance one minimal but verifiable next step",
+          "record results and the next action"
         ]
       }
     },
-    "feishu-image-outbound-fix": {
+    "example-task-type": {
       "runner": {
         "restartStatus": [
           "restart_required"
         ],
-        "restartToStatus": "执行中",
-        "defaultRestartApproach": "任务重启后新方案：先恢复任务推进机制，再要求进入新的具体执行步骤",
-        "defaultRestartBlocker": "旧方案已失效，已由 task_runner 自动重启为新方案。",
-        "defaultRestartNextAction": "向用户/主会话明确宣布旧方案失效，并以一个具体可执行步骤重新开始任务。"
+        "restartToStatus": "running",
+        "defaultRestartApproach": "Restart with a task-specific recovery approach.",
+        "defaultRestartBlocker": "Previous approach is treated as stale or ineffective.",
+        "defaultRestartNextAction": "Run the next task-specific recovery step and capture evidence."
       },
       "executor": {
         "plan": [
-          "定位 agent-runner.runtime 与 Feishu delivery 衔接点",
-          "确认补丁文件与函数",
-          "执行代码修改",
-          "重启 OpenClaw",
-          "做真实发图验证"
+          "inspect the current task ledger",
+          "pick the next concrete executable step",
+          "run the step",
+          "capture evidence and persist progress"
         ],
-        "actionsRef": "feishu-image-outbound-fix"
+        "actionsRef": "example-task-type"
       }
     }
   }

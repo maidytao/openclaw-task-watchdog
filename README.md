@@ -436,6 +436,7 @@ If you need a generic queue or transport abstraction, this repository is intenti
 - `docs/TROUBLESHOOTING.md`
 - `docs/QUICKSTART.md`
 - `docs/PUBLISHING-NOTES.md`
+- `docs/PUBLIC-REPO-AUDIT-v0.2.0.md`
 
 ---
 
