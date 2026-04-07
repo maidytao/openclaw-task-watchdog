@@ -1,0 +1,12 @@
+{
+  "version": 1,
+  "defaultTaskFile": "tasks/current-task.json",
+  "tasks": [
+    {
+      "id": "complex-resume-closure-validation-2026-03-31",
+      "title": "复杂任务恢复闭环验证",
+      "taskFile": "tasks/current-task.json",
+      "taskType": "generic-resumable"
+    }
+  ]
+}

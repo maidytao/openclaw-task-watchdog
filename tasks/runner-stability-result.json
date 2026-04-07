@@ -1,0 +1,87 @@
+{
+  "steps": [
+    {
+      "command": [
+        "python",
+        "tmp\\report-dispatcher-reset.py"
+      ],
+      "returncode": 0,
+      "stdout": "dispatcher_reset_ok\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "python",
+        "tools\\task_report_sender.py"
+      ],
+      "returncode": 0,
+      "stdout": "{\"processed\": [], \"remainingQueue\": 1, \"dryRun\": false, \"lastProcessedCount\": 0, \"lastError\": \"real session delivery must be invoked by OpenClaw tool wrapper, not direct script execution\", \"pendingToolPayload\": {\"sessionKey\": \"current\", \"message\": \"[[reply_to_current]] ����״̬֪ͨ\\n״̬��ִ����\\n�������֤ dispatcher �Զ����� dispatch request\\n������\\n��һ����runner ���� report-dispatch-request.json\\n�´θ��£�2026-04-07T18:16:07.289510+08:00\", \"messageKey\": \"dispatcher-check|ִ����||runner ���� report-dispatch-request.json|2026-04-07T18:16:07.289510+08:00\", \"taskId\": \"dispatcher-check\", \"createdAt\": \"2026-04-07T18:06:07.289510+08:00\", \"freshness\": {\"nextUpdateBy\": \"2026-04-07T18:16:07.289510+08:00\", \"isExpired\": false, \"ageSeconds\": -600}}, \"refreshedItems\": [{\"taskId\": \"dispatcher-check\", \"nextUpdateBy\": \"2026-04-07T18:16:07.289510+08:00\", \"refreshReason\": \"pending-payload-expired\"}], \"skippedExisting\": []}\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "python",
+        "tools\\task_report_sender_dispatcher.py"
+      ],
+      "returncode": 0,
+      "stdout": "{\"planned\": true, \"requestPath\": \"C:\\\\Users\\\\Administrator\\\\.openclaw\\\\workspace\\\\tasks\\\\report-dispatch-request.json\", \"messageKey\": \"dispatcher-check|ִ����||runner ���� report-dispatch-request.json|2026-04-07T18:16:07.289510+08:00\", \"attemptCount\": 1}\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "python",
+        "tools\\task_report_sender_mark_pending.py"
+      ],
+      "returncode": 0,
+      "stdout": "{\"recorded\": true, \"messageKey\": \"dispatcher-check|ִ����||runner ���� report-dispatch-request.json|2026-04-07T18:16:07.289510+08:00\", \"hasPendingConfirmation\": true, \"attemptCount\": 1}\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "python",
+        "tools\\task_report_sender_confirm_success.py",
+        "--source",
+        "runner_stability_observed",
+        "--note",
+        "runner stability observed success"
+      ],
+      "returncode": 0,
+      "stdout": "{\"written\": true, \"messageKey\": \"dispatcher-check|ִ����||runner ���� report-dispatch-request.json|2026-04-07T18:16:07.289510+08:00\", \"status\": \"success\", \"source\": \"runner_stability_observed\", \"observationCount\": 2}\n",
+      "stderr": ""
+    },
+    {
+      "command": "tasks\\report-delivery-runner.bat",
+      "returncode": 0,
+      "stdout": "{\"processed\": [], \"remainingQueue\": 1, \"dryRun\": false, \"lastProcessedCount\": 0, \"lastError\": \"\", \"pendingToolPayload\": {\"sessionKey\": \"current\", \"message\": \"[[reply_to_current]] ����״̬֪ͨ\\n״̬��ִ����\\n�������֤ dispatcher �Զ����� dispatch request\\n������\\n��һ����runner ���� report-dispatch-request.json\\n�´θ��£�2026-04-07T18:16:07.289510+08:00\", \"messageKey\": \"dispatcher-check|ִ����||runner ���� report-dispatch-request.json|2026-04-07T18:16:07.289510+08:00\", \"taskId\": \"dispatcher-check\", \"createdAt\": \"2026-04-07T18:06:07.289510+08:00\", \"freshness\": {\"nextUpdateBy\": \"2026-04-07T18:16:07.289510+08:00\", \"isExpired\": false, \"ageSeconds\": -600}}, \"refreshedItems\": [], \"skippedExisting\": [{\"taskId\": \"dispatcher-check\", \"messageKey\": \"dispatcher-check|ִ����||runner ���� report-dispatch-request.json|2026-04-07T18:16:07.289510+08:00\", \"reason\": \"existing_delivery_state\"}]}\n{\"planned\": false, \"reason\": \"dispatch_request_already_active\", \"requestPath\": \"C:\\\\Users\\\\Administrator\\\\.openclaw\\\\workspace\\\\tasks\\\\report-dispatch-request.json\", \"messageKey\": \"dispatcher-check|ִ����||runner ���� report-dispatch-request.json|2026-04-07T18:16:07.289510+08:00\", \"status\": \"ready\", \"attemptCount\": 1}\n{\"recorded\": false, \"reason\": \"pending_confirmation_already_exists\", \"messageKey\": \"dispatcher-check|ִ����||runner ���� report-dispatch-request.json|2026-04-07T18:16:07.289510+08:00\", \"hasPendingConfirmation\": true, \"attemptCount\": 1}\n{\"preparedAt\": \"2026-04-07T18:06:09.222585+08:00\", \"kind\": \"scheduler_observation_bridge\", \"ready\": true, \"messageKey\": \"dispatcher-check|ִ����||runner ���� report-dispatch-request.json|2026-04-07T18:16:07.289510+08:00\", \"sessionKey\": \"current\", \"message\": \"[[reply_to_current]] ����״̬֪ͨ\\n״̬��ִ����\\n�������֤ dispatcher �Զ����� dispatch request\\n������\\n��һ����runner ���� report-dispatch-request.json\\n�´θ��£�2026-04-07T18:16:07.289510+08:00\", \"nextAction\": \"observe delivered chat message in current session, then write success observation and run reconcile\", \"commands\": [\"python tools\\\\task_report_sender_confirm_success.py --source scheduled_task_observed --note \\\"scheduled task delivery observed in current chat\\\"\", \"python tools\\\\task_report_sender_reconcile.py --note \\\"reconcile after scheduled task observed delivery\\\"\", \"python tools\\\\cleanup_stale_report_protocol.py\"]}\n{\"action\": \"reconciled_to_success\", \"queueLength\": 0, \"hasPendingConfirmation\": false, \"hasPendingToolPayload\": false, \"lastError\": \"\", \"matchedObservation\": {\"observedAt\": \"2026-04-07T18:06:08.115884+08:00\", \"messageKey\": \"dispatcher-check|ִ����||runner ���� report-dispatch-request.json|2026-04-07T18:16:07.289510+08:00\", \"status\": \"success\", \"note\": \"runner stability observed success\", \"source\": \"runner_stability_observed\"}}\n{\"ok\": true, \"successMessageKey\": \"dispatcher-check|ִ����||runner ���� report-dispatch-request.json|2026-04-07T18:16:07.289510+08:00\", \"terminalAt\": \"2026-04-07T18:06:09.533331+08:00\", \"removed\": [], \"kept\": [\"C:\\\\Users\\\\Administrator\\\\.openclaw\\\\workspace\\\\tasks\\\\report-dispatch-request.json\", \"C:\\\\Users\\\\Administrator\\\\.openclaw\\\\workspace\\\\tasks\\\\report-live-send-result.json\"], \"stateDispatchRequestStatus\": \"reconciled_success\", \"stateLiveSendPlanStatus\": \"\"}\n",
+      "stderr": ""
+    },
+    {
+      "command": "tasks\\report-delivery-runner.bat",
+      "returncode": 0,
+      "stdout": "{\"processed\": [], \"remainingQueue\": 0, \"dryRun\": false, \"lastProcessedCount\": 0, \"lastError\": \"\", \"pendingToolPayload\": null, \"refreshedItems\": [], \"skippedExisting\": []}\n{\"planned\": false, \"reason\": \"no pendingToolPayload\", \"requestPath\": \"C:\\\\Users\\\\Administrator\\\\.openclaw\\\\workspace\\\\tasks\\\\report-dispatch-request.json\"}\n{\"recorded\": false, \"reason\": \"no pendingToolPayload\", \"hasPendingConfirmation\": false}\n{\"preparedAt\": \"2026-04-07T18:06:10.950072+08:00\", \"kind\": \"scheduler_observation_bridge\", \"ready\": false, \"messageKey\": \"\", \"sessionKey\": \"current\", \"message\": \"\", \"nextAction\": \"observe delivered chat message in current session, then write success observation and run reconcile\", \"commands\": [\"python tools\\\\task_report_sender_confirm_success.py --source scheduled_task_observed --note \\\"scheduled task delivery observed in current chat\\\"\", \"python tools\\\\task_report_sender_reconcile.py --note \\\"reconcile after scheduled task observed delivery\\\"\", \"python tools\\\\cleanup_stale_report_protocol.py\"]}\n{\"action\": \"noop\", \"reason\": \"no pendingConfirmation\", \"queueLength\": 0}\n{\"ok\": true, \"successMessageKey\": \"dispatcher-check|ִ����||runner ���� report-dispatch-request.json|2026-04-07T18:16:07.289510+08:00\", \"terminalAt\": \"2026-04-07T18:06:09.533331+08:00\", \"removed\": [], \"kept\": [\"C:\\\\Users\\\\Administrator\\\\.openclaw\\\\workspace\\\\tasks\\\\report-live-send-result.json\"], \"stateDispatchRequestStatus\": \"reconciled_success\", \"stateLiveSendPlanStatus\": \"\"}\n",
+      "stderr": ""
+    },
+    {
+      "command": "tasks\\report-delivery-runner.bat",
+      "returncode": 0,
+      "stdout": "{\"processed\": [], \"remainingQueue\": 0, \"dryRun\": false, \"lastProcessedCount\": 0, \"lastError\": \"\", \"pendingToolPayload\": null, \"refreshedItems\": [], \"skippedExisting\": []}\n{\"planned\": false, \"reason\": \"no pendingToolPayload\", \"requestPath\": \"C:\\\\Users\\\\Administrator\\\\.openclaw\\\\workspace\\\\tasks\\\\report-dispatch-request.json\"}\n{\"recorded\": false, \"reason\": \"no pendingToolPayload\", \"hasPendingConfirmation\": false}\n{\"preparedAt\": \"2026-04-07T18:06:12.582943+08:00\", \"kind\": \"scheduler_observation_bridge\", \"ready\": false, \"messageKey\": \"\", \"sessionKey\": \"current\", \"message\": \"\", \"nextAction\": \"observe delivered chat message in current session, then write success observation and run reconcile\", \"commands\": [\"python tools\\\\task_report_sender_confirm_success.py --source scheduled_task_observed --note \\\"scheduled task delivery observed in current chat\\\"\", \"python tools\\\\task_report_sender_reconcile.py --note \\\"reconcile after scheduled task observed delivery\\\"\", \"python tools\\\\cleanup_stale_report_protocol.py\"]}\n{\"action\": \"noop\", \"reason\": \"no pendingConfirmation\", \"queueLength\": 0}\n{\"ok\": true, \"successMessageKey\": \"dispatcher-check|ִ����||runner ���� report-dispatch-request.json|2026-04-07T18:16:07.289510+08:00\", \"terminalAt\": \"2026-04-07T18:06:09.533331+08:00\", \"removed\": [], \"kept\": [\"C:\\\\Users\\\\Administrator\\\\.openclaw\\\\workspace\\\\tasks\\\\report-live-send-result.json\"], \"stateDispatchRequestStatus\": \"reconciled_success\", \"stateLiveSendPlanStatus\": \"\"}\n",
+      "stderr": ""
+    }
+  ],
+  "queueLength": 0,
+  "hasPendingToolPayload": false,
+  "hasPendingConfirmation": false,
+  "lastError": "",
+  "attemptStatuses": [
+    "pending_confirmation",
+    "success"
+  ],
+  "successAttemptCount": 1,
+  "pendingAttemptCount": 1,
+  "requestExists": false,
+  "handoffExists": false,
+  "planExists": false,
+  "liveResultStatus": "reconciled_success",
+  "observationCount": 2,
+  "stable": true
+}

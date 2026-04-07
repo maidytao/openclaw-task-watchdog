@@ -1,0 +1,45 @@
+{
+  "version": 1,
+  "types": {
+    "generic-resumable": {
+      "runner": {
+        "restartStatus": [
+          "restart_required"
+        ],
+        "restartToStatus": "执行中",
+        "defaultRestartApproach": "任务重启后新方案：先恢复任务推进机制，再要求进入新的具体执行步骤",
+        "defaultRestartBlocker": "旧方案已失效，已由 task_runner 自动重启为新方案。",
+        "defaultRestartNextAction": "向用户/主会话明确宣布旧方案失效，并以一个具体可执行步骤重新开始任务。"
+      },
+      "executor": {
+        "plan": [
+          "确认当前任务的真实目标与可验证产物",
+          "识别上一轮失败点并切换执行策略",
+          "推进一个最小但真实可验证的下一步",
+          "记录结果与下一步"
+        ]
+      }
+    },
+    "feishu-image-outbound-fix": {
+      "runner": {
+        "restartStatus": [
+          "restart_required"
+        ],
+        "restartToStatus": "执行中",
+        "defaultRestartApproach": "任务重启后新方案：先恢复任务推进机制，再要求进入新的具体执行步骤",
+        "defaultRestartBlocker": "旧方案已失效，已由 task_runner 自动重启为新方案。",
+        "defaultRestartNextAction": "向用户/主会话明确宣布旧方案失效，并以一个具体可执行步骤重新开始任务。"
+      },
+      "executor": {
+        "plan": [
+          "定位 agent-runner.runtime 与 Feishu delivery 衔接点",
+          "确认补丁文件与函数",
+          "执行代码修改",
+          "重启 OpenClaw",
+          "做真实发图验证"
+        ],
+        "actionsRef": "feishu-image-outbound-fix"
+      }
+    }
+  }
+}

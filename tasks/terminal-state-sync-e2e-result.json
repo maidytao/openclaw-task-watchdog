@@ -1,0 +1,20 @@
+{
+  "steps": [
+    {
+      "command": [
+        "python",
+        "tools\\sync_report_delivery_terminal_state.py"
+      ],
+      "returncode": 0,
+      "stdout": "{\"ok\": true, \"targetMessageKey\": \"scheduler-check|ִ����||�� Scheduled Task ���� report-delivery-runner.bat|2026-04-07T18:06:13.417245+08:00\", \"mode\": \"pending_confirmation\", \"terminalAt\": \"2026-04-07T18:06:14.827249+08:00\", \"changed\": {\"state\": true, \"request\": true, \"handoff\": false, \"plan\": false, \"result\": true}, \"dispatchRequestStatus\": \"pending_confirmation\", \"liveSendPlanStatus\": \"\", \"requestStatus\": \"pending_confirmation\", \"handoffStatus\": \"\", \"planStatus\": \"\", \"liveResultStatus\": \"pending_confirmation\"}\n",
+      "stderr": ""
+    }
+  ],
+  "stateDispatchRequestStatus": "pending_confirmation",
+  "stateLiveSendPlanStatus": "",
+  "requestStatus": "pending_confirmation",
+  "handoffStatus": "",
+  "planStatus": "",
+  "liveResultStatus": "pending_confirmation",
+  "synced": true
+}

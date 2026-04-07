@@ -1,0 +1,136 @@
+{
+  "status": "ok",
+  "startedAt": "2026-04-07T19:50:04.925733+08:00",
+  "finishedAt": "2026-04-07T19:50:06.450497+08:00",
+  "overallOk": true,
+  "scenarioCount": 5,
+  "passedCount": 5,
+  "failedScenarios": [],
+  "scenarios": [
+    {
+      "name": "reporter_recreates_missing_queue_and_state",
+      "inject": "删除 report-queue.json 和 reporter-state.json，再运行 reporter",
+      "steps": [
+        {
+          "script": "task_reporter.py",
+          "args": [],
+          "returncode": 0,
+          "stdout": "{\"queued\": [\"resilience-round3-task\"], \"queueLength\": 1, \"archiveLength\": 0}\n",
+          "stderr": ""
+        }
+      ],
+      "observed": {
+        "queueExists": true,
+        "stateExists": true,
+        "queueLength": 1,
+        "queuedTaskIds": [
+          "resilience-round3-task"
+        ]
+      },
+      "pass": true
+    },
+    {
+      "name": "sender_dedupes_duplicate_queue_entries",
+      "inject": "向队列写入完全重复的两条消息，验证 sender 处理后只保留一个活跃项",
+      "steps": [
+        {
+          "script": "task_report_sender.py",
+          "args": [],
+          "returncode": 0,
+          "stdout": "{\"processed\": [], \"remainingQueue\": 1, \"dryRun\": false, \"lastProcessedCount\": 0, \"lastError\": \"real session delivery must be invoked by OpenClaw tool wrapper, not direct script execution\", \"pendingToolPayload\": {\"sessionKey\": \"current\", \"message\": \"[[reply_to_current]] 任务状态通知\\n状态：执行中\\n交付物：验证事故面条件下的韧性\\n阻塞：\\n下一步：emit report\\n下次更新：2026-04-07T20:00:05.218058+08:00\", \"messageKey\": \"resilience-round3-task|执行中||emit report|2026-04-07T20:00:05.218058+08:00\", \"taskId\": \"resilience-round3-task\", \"createdAt\": \"2026-04-07T19:50:05.448779+08:00\", \"freshness\": {\"nextUpdateBy\": \"2026-04-07T20:00:05.218058+08:00\", \"isExpired\": false, \"ageSeconds\": -599}}, \"refreshedItems\": [], \"skippedExisting\": []}\n",
+          "stderr": ""
+        }
+      ],
+      "observed": {
+        "remainingQueue": 1,
+        "pendingToolPayload": {
+          "sessionKey": "current",
+          "message": "[[reply_to_current]] 任务状态通知\n状态：执行中\n交付物：验证事故面条件下的韧性\n阻塞：\n下一步：emit report\n下次更新：2026-04-07T20:00:05.218058+08:00",
+          "messageKey": "resilience-round3-task|执行中||emit report|2026-04-07T20:00:05.218058+08:00",
+          "taskId": "resilience-round3-task",
+          "createdAt": "2026-04-07T19:50:05.448779+08:00",
+          "freshness": {
+            "nextUpdateBy": "2026-04-07T20:00:05.218058+08:00",
+            "isExpired": false,
+            "ageSeconds": -599
+          }
+        },
+        "lastError": "real session delivery must be invoked by OpenClaw tool wrapper, not direct script execution"
+      },
+      "pass": true
+    },
+    {
+      "name": "sync_prefers_success_over_pending_conflict",
+      "inject": "同时放入 pending 和 success 两种 attempt，验证 terminal sync 选择 success 作为更强终态",
+      "steps": [
+        {
+          "script": "sync_report_delivery_terminal_state.py",
+          "args": [],
+          "returncode": 0,
+          "stdout": "{\"ok\": true, \"targetMessageKey\": \"resilience-round3-task|执行中||emit report|2026-04-07T20:00:05.503816+08:00\", \"mode\": \"success\", \"terminalAt\": \"2026-04-07T19:50:05.503816+08:00\", \"changed\": {\"state\": true, \"request\": true, \"handoff\": true, \"plan\": true, \"result\": true}, \"dispatchRequestStatus\": \"reconciled_success\", \"liveSendPlanStatus\": \"reconciled_success\", \"requestStatus\": \"reconciled_success\", \"handoffStatus\": \"reconciled_success\", \"planStatus\": \"reconciled_success\", \"liveResultStatus\": \"reconciled_success\"}\n",
+          "stderr": ""
+        }
+      ],
+      "observed": {
+        "mode": "success",
+        "requestStatus": "reconciled_success",
+        "liveResultStatus": "reconciled_success"
+      },
+      "pass": true
+    },
+    {
+      "name": "runner_missing_task_file_is_controlled",
+      "inject": "删除 current-task.json 再运行 runner，验证不会崩溃且记录 missing_task_file",
+      "steps": [
+        {
+          "script": "task_runner.py",
+          "args": [],
+          "returncode": 0,
+          "stdout": "missing_task_file\n",
+          "stderr": ""
+        }
+      ],
+      "observed": {
+        "tasks": [
+          {
+            "taskFile": "tasks/current-task.json",
+            "action": "missing_task_file"
+          }
+        ],
+        "lastRunAt": "2026-04-07T19:50:06.030839+08:00"
+      },
+      "pass": true
+    },
+    {
+      "name": "reconcile_clears_queue_on_real_success_observation",
+      "inject": "给 pending confirmation 注入真实 success observation，验证 reconcile 收口并清队列",
+      "steps": [
+        {
+          "script": "task_report_sender_reconcile.py",
+          "args": [],
+          "returncode": 0,
+          "stdout": "{\"action\": \"reconciled_to_success\", \"queueLength\": 0, \"hasPendingConfirmation\": false, \"hasPendingToolPayload\": false, \"lastError\": \"\", \"matchedObservation\": {\"messageKey\": \"resilience-round3-task|执行中||emit report|2026-04-07T20:00:06.082654+08:00\", \"status\": \"success\", \"source\": \"feishu-runtime\", \"note\": \"delivery observed in live surface\"}}\n",
+          "stderr": ""
+        }
+      ],
+      "observed": {
+        "queueLength": 0,
+        "hasPendingConfirmation": false,
+        "hasPendingToolPayload": false,
+        "lastError": "",
+        "attempts": [
+          {
+            "attemptedAt": "2026-04-07T19:50:06.398920+08:00",
+            "sessionKey": "agent:main:feishu:direct:test",
+            "messageKey": "resilience-round3-task|执行中||emit report|2026-04-07T20:00:06.082654+08:00",
+            "messagePreview": "[[reply_to_current]] 任务状态通知\n状态：执行中\n交付物：验证事故面条件下的韧性\n阻塞：\n下一步：emit report\n下次更新：2026-04-07T20:00:06.082654+08:00",
+            "status": "success",
+            "note": "reconciled from real observation file: delivery observed in live surface"
+          }
+        ]
+      },
+      "pass": true
+    }
+  ],
+  "restoredOriginalFiles": true
+}

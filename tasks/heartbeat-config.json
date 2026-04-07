@@ -1,0 +1,9 @@
+{
+  "enabled": true,
+  "taskFile": "tasks/current-task.json",
+  "intervalMinutes": 5,
+  "maxSilentHeartbeats": 2,
+  "defaultStatusOnTimeout": "blocked",
+  "timeoutAction": "mark_and_exit",
+  "notes": "Heartbeat watchdog for long tasks. Updates task state when overdue; intended to be run periodically by scheduler or manual invocation."
+}

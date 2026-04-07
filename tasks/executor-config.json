@@ -1,0 +1,18 @@
+{
+  "enabled": true,
+  "taskFile": "tasks/current-task.json",
+  "stateFile": "tasks/executor-state.json",
+  "handlers": {
+    "feishu-image-outbound-fix": {
+      "match": "feishu-image-outbound-fix",
+      "plan": [
+        "定位 agent-runner.runtime 与 Feishu delivery 衔接点",
+        "确认补丁文件与函数",
+        "执行代码修改",
+        "重启 OpenClaw",
+        "做真实发图验证"
+      ]
+    }
+  },
+  "notes": "Legacy executor handler definitions. Preferred extension path is task-registry.json + task-types.json; handlers remain for backward compatibility."
+}

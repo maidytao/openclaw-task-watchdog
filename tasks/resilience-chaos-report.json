@@ -1,0 +1,122 @@
+{
+  "status": "ok",
+  "startedAt": "2026-04-07T19:50:00.934922+08:00",
+  "finishedAt": "2026-04-07T19:50:02.755450+08:00",
+  "overallOk": true,
+  "scenarioCount": 5,
+  "passedCount": 5,
+  "failedScenarios": [],
+  "scenarios": [
+    {
+      "name": "overdue_to_restart_required",
+      "inject": "构造超时且无实质进展的执行中任务，连续触发两次 heartbeat",
+      "steps": [
+        {
+          "script": "task_heartbeat.py",
+          "returncode": 0,
+          "stdout": "[{\"action\": \"overdue\", \"status\": \"blocked\", \"noProgressHeartbeats\": 1, \"progressSource\": \"lastProgressAt\", \"taskFile\": \"tasks/current-task.json\"}]\n",
+          "stderr": ""
+        },
+        {
+          "script": "task_heartbeat.py",
+          "returncode": 0,
+          "stdout": "[{\"action\": \"overdue\", \"status\": \"restart_required\", \"noProgressHeartbeats\": 2, \"progressSource\": \"lastProgressAt\", \"taskFile\": \"tasks/current-task.json\"}]\n",
+          "stderr": ""
+        }
+      ],
+      "observed": {
+        "afterFirstStatus": "blocked",
+        "afterFirstNoProgress": 1,
+        "afterSecondStatus": "restart_required",
+        "afterSecondNoProgress": 2,
+        "afterSecondBlocker": "Two consecutive no-progress heartbeats based on missing substantive evidence. Task restart required."
+      },
+      "pass": true
+    },
+    {
+      "name": "runner_recovers_restart_required",
+      "inject": "直接把任务置为 restart_required，验证 runner 是否重启为执行中并切换方案",
+      "steps": [
+        {
+          "script": "task_runner.py",
+          "returncode": 0,
+          "stdout": "restarted\n",
+          "stderr": ""
+        }
+      ],
+      "observed": {
+        "status": "执行中",
+        "restartCount": 1,
+        "currentApproach": "任务重启后新方案：先恢复任务推进机制，再要求进入新的具体执行步骤",
+        "blocker": "旧方案已失效，已由 task_runner 自动重启为新方案。",
+        "nextAction": "向用户/主会话明确宣布旧方案失效，并以一个具体可执行步骤重新开始任务。"
+      },
+      "pass": true
+    },
+    {
+      "name": "executor_advance_after_restart",
+      "inject": "先让 runner 重启任务，再让 executor 推进一步骤",
+      "steps": [
+        {
+          "script": "task_runner.py",
+          "returncode": 0,
+          "stdout": "restarted\n",
+          "stderr": ""
+        },
+        {
+          "script": "task_executor.py",
+          "returncode": 0,
+          "stdout": "advanced_step\n",
+          "stderr": ""
+        }
+      ],
+      "observed": {
+        "status": "执行中",
+        "executorStepIndex": 1,
+        "nextAction": "确认当前任务的真实目标与可验证产物",
+        "lastHeartbeatAt": "2026-04-07T19:50:02.181958+08:00"
+      },
+      "pass": true
+    },
+    {
+      "name": "completion_evidence_closes_task",
+      "inject": "注入可验证完成证据，验证 heartbeat 是否直接收口为已完成",
+      "steps": [
+        {
+          "script": "task_heartbeat.py",
+          "returncode": 0,
+          "stdout": "[{\"action\": \"closed_from_evidence\", \"status\": \"已完成\", \"taskFile\": \"tasks/current-task.json\"}]\n",
+          "stderr": ""
+        }
+      ],
+      "observed": {
+        "status": "已完成",
+        "noProgressHeartbeats": 0,
+        "blocker": "",
+        "nextAction": "No further action required. Task has verifiable completion evidence."
+      },
+      "pass": true
+    },
+    {
+      "name": "runner_circuit_breaker",
+      "inject": "构造重复重启且无进展的任务，验证 runner 是否打开断路器转 blocked",
+      "steps": [
+        {
+          "script": "task_runner.py",
+          "returncode": 0,
+          "stdout": "restart_circuit_opened\n",
+          "stderr": ""
+        }
+      ],
+      "observed": {
+        "status": "blocked",
+        "restartCount": 2,
+        "blocker": "Automatic restart circuit breaker engaged: repeated restarts occurred without substantive progress evidence.",
+        "nextAction": "Stop auto-restarting this task. Require a new execution approach that produces a verifiable output before resuming."
+      },
+      "pass": true
+    }
+  ],
+  "restoredOriginalTask": true,
+  "backupFile": "tasks/current-task.chaos-backup.json"
+}

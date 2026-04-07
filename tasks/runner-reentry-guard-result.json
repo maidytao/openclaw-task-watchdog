@@ -1,0 +1,111 @@
+{
+  "steps": [
+    {
+      "command": [
+        "python",
+        "tmp\\report-dispatcher-reset.py"
+      ],
+      "returncode": 0,
+      "stdout": "dispatcher_reset_ok\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "python",
+        "tools\\task_report_sender.py"
+      ],
+      "returncode": 0,
+      "stdout": "{\"processed\": [], \"remainingQueue\": 1, \"dryRun\": false, \"lastProcessedCount\": 0, \"lastError\": \"real session delivery must be invoked by OpenClaw tool wrapper, not direct script execution\", \"pendingToolPayload\": {\"sessionKey\": \"current\", \"message\": \"[[reply_to_current]] ����״̬֪ͨ\\n״̬��ִ����\\n�������֤ dispatcher �Զ����� dispatch request\\n������\\n��һ����runner ���� report-dispatch-request.json\\n�´θ��£�2026-04-07T18:16:04.362764+08:00\", \"messageKey\": \"dispatcher-check|ִ����||runner ���� report-dispatch-request.json|2026-04-07T18:16:04.362764+08:00\", \"taskId\": \"dispatcher-check\", \"createdAt\": \"2026-04-07T18:06:04.362764+08:00\", \"freshness\": {\"nextUpdateBy\": \"2026-04-07T18:16:04.362764+08:00\", \"isExpired\": false, \"ageSeconds\": -600}}, \"refreshedItems\": [{\"taskId\": \"dispatcher-check\", \"nextUpdateBy\": \"2026-04-07T18:16:04.362764+08:00\", \"refreshReason\": \"pending-payload-expired\"}], \"skippedExisting\": []}\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "python",
+        "tools\\task_report_sender_dispatcher.py"
+      ],
+      "returncode": 0,
+      "stdout": "{\"planned\": true, \"requestPath\": \"C:\\\\Users\\\\Administrator\\\\.openclaw\\\\workspace\\\\tasks\\\\report-dispatch-request.json\", \"messageKey\": \"dispatcher-check|ִ����||runner ���� report-dispatch-request.json|2026-04-07T18:16:04.362764+08:00\", \"attemptCount\": 1}\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "python",
+        "tools\\task_report_sender_mark_pending.py"
+      ],
+      "returncode": 0,
+      "stdout": "{\"recorded\": true, \"messageKey\": \"dispatcher-check|ִ����||runner ���� report-dispatch-request.json|2026-04-07T18:16:04.362764+08:00\", \"hasPendingConfirmation\": true, \"attemptCount\": 1}\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "python",
+        "tools\\task_report_sender_confirm_success.py",
+        "--source",
+        "guard_test_observed",
+        "--note",
+        "guard test success observation"
+      ],
+      "returncode": 0,
+      "stdout": "{\"written\": true, \"messageKey\": \"dispatcher-check|ִ����||runner ���� report-dispatch-request.json|2026-04-07T18:16:04.362764+08:00\", \"status\": \"success\", \"source\": \"guard_test_observed\", \"observationCount\": 2}\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "python",
+        "tools\\task_report_sender_reconcile.py",
+        "--note",
+        "guard test reconcile to success"
+      ],
+      "returncode": 0,
+      "stdout": "{\"action\": \"reconciled_to_success\", \"queueLength\": 0, \"hasPendingConfirmation\": false, \"hasPendingToolPayload\": false, \"lastError\": \"\", \"matchedObservation\": {\"observedAt\": \"2026-04-07T18:06:05.179291+08:00\", \"messageKey\": \"dispatcher-check|ִ����||runner ���� report-dispatch-request.json|2026-04-07T18:16:04.362764+08:00\", \"status\": \"success\", \"note\": \"guard test success observation\", \"source\": \"guard_test_observed\"}}\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "python",
+        "tools\\task_report_sender.py"
+      ],
+      "returncode": 0,
+      "stdout": "{\"processed\": [], \"remainingQueue\": 0, \"dryRun\": false, \"lastProcessedCount\": 0, \"lastError\": \"\", \"pendingToolPayload\": null, \"refreshedItems\": [], \"skippedExisting\": []}\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "python",
+        "tools\\task_report_sender_dispatcher.py"
+      ],
+      "returncode": 0,
+      "stdout": "{\"planned\": false, \"reason\": \"no pendingToolPayload\", \"requestPath\": \"C:\\\\Users\\\\Administrator\\\\.openclaw\\\\workspace\\\\tasks\\\\report-dispatch-request.json\"}\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "python",
+        "tools\\task_report_sender_mark_pending.py"
+      ],
+      "returncode": 0,
+      "stdout": "{\"recorded\": false, \"reason\": \"no pendingToolPayload\", \"hasPendingConfirmation\": false}\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "python",
+        "tools\\task_report_sender_reconcile.py",
+        "--note",
+        "guard test second reconcile"
+      ],
+      "returncode": 0,
+      "stdout": "{\"action\": \"noop\", \"reason\": \"no pendingConfirmation\", \"queueLength\": 0}\n",
+      "stderr": ""
+    }
+  ],
+  "queueLength": 0,
+  "hasPendingToolPayload": false,
+  "hasPendingConfirmation": false,
+  "lastError": "",
+  "lastAttemptStatus": "success",
+  "successAttemptCount": 1,
+  "dispatchRequestStatus": "",
+  "observationCount": 2,
+  "closed": true
+}

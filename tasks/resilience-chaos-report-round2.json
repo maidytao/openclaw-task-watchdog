@@ -1,0 +1,127 @@
+{
+  "status": "ok",
+  "startedAt": "2026-04-07T19:50:03.089338+08:00",
+  "finishedAt": "2026-04-07T19:50:04.592815+08:00",
+  "overallOk": true,
+  "scenarioCount": 5,
+  "passedCount": 5,
+  "failedScenarios": [],
+  "scenarios": [
+    {
+      "name": "reporter_recovers_invalid_queue_json",
+      "inject": "把 report-queue.json 损坏成非法 JSON，再运行 reporter",
+      "steps": [
+        {
+          "script": "task_reporter.py",
+          "args": [],
+          "returncode": 0,
+          "stdout": "{\"queued\": [\"resilience-round2-report-task\"], \"queueLength\": 1, \"archiveLength\": 0}\n",
+          "stderr": ""
+        }
+      ],
+      "observed": {
+        "queueLength": 1,
+        "queuedTaskIds": [
+          "resilience-round2-report-task"
+        ],
+        "lastReportAt": "2026-04-07T19:50:03.334648+08:00"
+      },
+      "pass": true
+    },
+    {
+      "name": "sender_recovers_invalid_state_json",
+      "inject": "把 report-sender-state.json 损坏成非法 JSON，再运行 sender",
+      "steps": [
+        {
+          "script": "task_report_sender.py",
+          "args": [],
+          "returncode": 0,
+          "stdout": "{\"processed\": [], \"remainingQueue\": 1, \"dryRun\": false, \"lastProcessedCount\": 0, \"lastError\": \"real session delivery must be invoked by OpenClaw tool wrapper, not direct script execution\", \"pendingToolPayload\": {\"sessionKey\": \"current\", \"message\": \"[[reply_to_current]] 任务状态通知\\n状态：执行中\\n交付物：验证报告链路在脏状态下的韧性\\n阻塞：\\n下一步：emit report\\n下次更新：2026-04-07T20:00:03.388135+08:00\", \"messageKey\": \"resilience-round2-report-task|执行中||emit report|2026-04-07T20:00:03.388135+08:00\", \"taskId\": \"resilience-round2-report-task\", \"createdAt\": \"2026-04-07T19:50:03.624332+08:00\", \"freshness\": {\"nextUpdateBy\": \"2026-04-07T20:00:03.388135+08:00\", \"isExpired\": false, \"ageSeconds\": -599}}, \"refreshedItems\": [], \"skippedExisting\": []}\n",
+          "stderr": ""
+        }
+      ],
+      "observed": {
+        "lastProcessedCount": 0,
+        "remainingQueue": 1,
+        "lastError": "real session delivery must be invoked by OpenClaw tool wrapper, not direct script execution"
+      },
+      "pass": true
+    },
+    {
+      "name": "sender_refreshes_expired_pending_payload",
+      "inject": "给 sender 一个已过期 nextUpdateBy 的待发送 payload，验证是否自动刷新",
+      "steps": [
+        {
+          "script": "task_report_sender.py",
+          "args": [],
+          "returncode": 0,
+          "stdout": "{\"processed\": [], \"remainingQueue\": 1, \"dryRun\": false, \"lastProcessedCount\": 0, \"lastError\": \"real session delivery must be invoked by OpenClaw tool wrapper, not direct script execution\", \"pendingToolPayload\": {\"sessionKey\": \"current\", \"message\": \"[[reply_to_current]] 任务状态通知\\n状态：执行中\\n交付物：验证报告链路在脏状态下的韧性\\n阻塞：\\n下一步：emit report\\n下次更新：2026-04-07T20:00:03.877837+08:00\", \"messageKey\": \"resilience-round2-report-task|执行中||emit report|2026-04-07T20:00:03.877837+08:00\", \"taskId\": \"resilience-round2-report-task\", \"createdAt\": \"2026-04-07T19:50:03.877837+08:00\", \"freshness\": {\"nextUpdateBy\": \"2026-04-07T20:00:03.877837+08:00\", \"isExpired\": false, \"ageSeconds\": -600}}, \"refreshedItems\": [{\"taskId\": \"resilience-round2-report-task\", \"nextUpdateBy\": \"2026-04-07T20:00:03.877837+08:00\", \"refreshReason\": \"pending-payload-expired\"}], \"skippedExisting\": []}\n",
+          "stderr": ""
+        }
+      ],
+      "observed": {
+        "refreshedItems": [
+          {
+            "taskId": "resilience-round2-report-task",
+            "nextUpdateBy": "2026-04-07T20:00:03.877837+08:00",
+            "refreshReason": "pending-payload-expired"
+          }
+        ],
+        "lastProcessedCount": 0,
+        "pendingToolPayload": {
+          "sessionKey": "current",
+          "message": "[[reply_to_current]] 任务状态通知\n状态：执行中\n交付物：验证报告链路在脏状态下的韧性\n阻塞：\n下一步：emit report\n下次更新：2026-04-07T20:00:03.877837+08:00",
+          "messageKey": "resilience-round2-report-task|执行中||emit report|2026-04-07T20:00:03.877837+08:00",
+          "taskId": "resilience-round2-report-task",
+          "createdAt": "2026-04-07T19:50:03.877837+08:00",
+          "freshness": {
+            "nextUpdateBy": "2026-04-07T20:00:03.877837+08:00",
+            "isExpired": false,
+            "ageSeconds": -600
+          }
+        }
+      },
+      "pass": true
+    },
+    {
+      "name": "terminal_sync_accepts_pending_only",
+      "inject": "只提供 pending_confirmation 终态，不提供 success，验证 terminal sync 是否接受该边界",
+      "steps": [
+        {
+          "script": "sync_report_delivery_terminal_state.py",
+          "args": [],
+          "returncode": 0,
+          "stdout": "{\"ok\": true, \"targetMessageKey\": \"resilience-round2-report-task|执行中||emit report|2026-04-07T20:00:03.924524+08:00\", \"mode\": \"pending_confirmation\", \"terminalAt\": \"2026-04-07T19:50:03.924524+08:00\", \"changed\": {\"state\": true, \"request\": true, \"handoff\": true, \"plan\": true, \"result\": true}, \"dispatchRequestStatus\": \"pending_confirmation\", \"liveSendPlanStatus\": \"pending_confirmation\", \"requestStatus\": \"pending_confirmation\", \"handoffStatus\": \"pending_confirmation\", \"planStatus\": \"pending_confirmation\", \"liveResultStatus\": \"pending_confirmation\"}\n",
+          "stderr": ""
+        }
+      ],
+      "observed": {
+        "mode": "pending_confirmation",
+        "requestStatus": "pending_confirmation",
+        "planStatus": "pending_confirmation",
+        "liveResultStatus": "pending_confirmation"
+      },
+      "pass": true
+    },
+    {
+      "name": "reconcile_survives_invalid_observation_file",
+      "inject": "把 observation 文件损坏，再运行 reconcile，验证不会崩溃且保持 pending",
+      "steps": [
+        {
+          "script": "task_report_sender_reconcile.py",
+          "args": [],
+          "returncode": 0,
+          "stdout": "{\"action\": \"kept_pending\", \"queueLength\": 1, \"hasPendingConfirmation\": true, \"hasPendingToolPayload\": true, \"lastError\": \"pending confirmation after sessions_send timeout\", \"matchedObservation\": null}\n",
+          "stderr": ""
+        }
+      ],
+      "observed": {
+        "hasPendingConfirmation": true,
+        "hasPendingToolPayload": true,
+        "lastError": "pending confirmation after sessions_send timeout"
+      },
+      "pass": true
+    }
+  ],
+  "restoredOriginalFiles": true
+}

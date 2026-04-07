@@ -1,0 +1,8 @@
+{
+  "enabled": true,
+  "taskFile": "tasks/current-task.json",
+  "runnerStateFile": "tasks/runner-state.json",
+  "intervalMinutes": 5,
+  "maxRestartsWithoutProgress": 2,
+  "notes": "Task runner that resumes/restarts stalled tasks after watchdog marks them blocked or restart_required. Includes a circuit breaker to stop infinite restart loops without substantive progress."
+}
