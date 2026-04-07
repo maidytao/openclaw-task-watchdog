@@ -387,10 +387,15 @@ If you want a fast read:
 ## Repository layout
 
 - `tools/` runtime, watchdog, operator, validation, and acceptance scripts
-- `tasks/` task/runtime artifacts and example result files
+- `tasks/` task/runtime templates plus published example result files
 - `config/` configuration templates
 - `scripts/` install/uninstall/bootstrap helpers
 - `docs/` architecture, operations, troubleshooting, quick start
+
+Public repo note:
+- machine-local runtime state should stay in the local OpenClaw workspace
+- committed JSON reports in `tasks/` are published example evidence, not the only intended runtime store
+- see `tasks/README-reports.md` for report-file guidance
 
 ---
 

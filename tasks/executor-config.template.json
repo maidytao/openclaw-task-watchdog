@@ -14,5 +14,5 @@
       ]
     }
   },
-  "notes": "Public-safe sample executor handler definitions. Replace example handlers with your own task-specific actions after install. Preferred extension path is task-registry.json + task-types.json; handlers remain for backward compatibility."
+  "notes": "Template executor handler definitions for public use. Copy to executor-config.json and replace example handlers with your own task types. Preferred extension path is task-registry.json + task-types.json; handlers remain for backward compatibility."
 }

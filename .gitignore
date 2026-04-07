@@ -9,3 +9,32 @@ Thumbs.db
 *.log
 *.tmp
 *.bak
+
+# runtime state and machine-local artifacts
+artifacts/
+tmp/
+tmp_browser_check*.png
+*.png
+*.jpg
+*.jpeg
+
+# local task runtime state
+/tasks/current-task.json
+/tasks/current-task.*.json
+/tasks/runner-state.json
+/tasks/executor-state.json
+/tasks/reporter-state.json
+/tasks/report-sender-state.json
+/tasks/report-queue.json
+/tasks/report-queue.archive.json
+/tasks/report-delivery-observations.json
+/tasks/scheduler-observation-bridge.json
+/tasks/scheduler-observation-inbox.json
+/tasks/subtask-current.json
+/tasks/subtasks/
+
+# keep published example reports explicit; ignore future ad-hoc outputs
+/tasks/*-state.json
+/tasks/*-poll-result.json
+/tasks/*-consume-result.json
+/tasks/*-dispatch*.json
